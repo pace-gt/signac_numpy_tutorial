@@ -5,26 +5,29 @@
     {{- super () -}}
 
 {% if gpus %}
-#SBATCH -q gpu
+#SBATCH -p gpu-a100
 #SBATCH --gres gpu:{{ gpus }}
-#SBATCH --constraint=v100
+#SBATCH --mem-per-gpu=32G
 {%- else %}
-#SBATCH -q primary
-#SBATCH --constraint=intel
+#SBATCH -p cpu-small
+
 {%- endif %}
 
+#SBATCH -A phx-pace-staff
 #SBATCH -N 1
-#SBATCH --mail-type=ALL
+#SBATCH -q inferno
+#SBATCH --output=/dev/null
+#SBATCH --error=/dev/null
 
 echo  "Running on host" hostname
 echo  "Time is" date
 
 # load any modules here needed for both CPU and GPU versions
-module load python/3.10
+module anaconda3
 
 # Add any modules here needed only for the GPU versions
 {% if gpus %}
-module load cuda/11.0
+module load cuda/12.1.1-6oacj6
 {%- endif %}
 
 # activate the required conda environment
