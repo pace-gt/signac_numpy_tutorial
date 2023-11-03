@@ -2,12 +2,14 @@
 
 {% block header %}
 {% set gpus = operations|map(attribute='directives.ngpu')|sum %}
+{% set memory = operations|map(attribute='directives.memory')|sum %}
+{% set np = operations|map(attribute='directives.np')|sum %}
     {{- super () -}}
 
 {% if gpus %}
 #SBATCH -p gpu-a100
 #SBATCH --gres gpu:{{ gpus }}
-#SBATCH --mem-per-gpu=32G
+
 {%- else %}
 #SBATCH -p cpu-small
 
