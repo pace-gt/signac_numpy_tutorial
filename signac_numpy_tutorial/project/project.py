@@ -7,6 +7,7 @@ import numpy as np
 import flow
 from flow import FlowProject, aggregator
 from flow.environment import DefaultSlurmEnvironment
+import hpc_setup
 
 # ******************************************************
 # ******************************************************
@@ -22,14 +23,6 @@ class Project(FlowProject):
     def __init__(self):
         super().__init__()
 
-
-class Phoenix(DefaultSlurmEnvironment):  
-    """Subclass of DefaultSlurmEnvironment for GT Phoenix HPC."""
-    
-    # Find the hostname by loggin in the HPC and using the 'hostname' command.
-    # In this case 'hostname' produced 'login-phoenix-slurm-2.pace.gatech.edu'.
-    hostname_pattern = r".*\.login-phoenix-slurm-2\.pace\.gatech\.edu"
-    template = "phoenix.sh"
 
 # ******************************************************
 # ******************************************************
@@ -54,23 +47,24 @@ numpy_input_filename_str = "numpy_input_file"
 numpy_output_filename_str = "numpy_output_file"
 output_avg_std_of_replicates_txt_filename = "output_avg_std_of_replicates_txt_filename"
 
-# set the walltime, memory, and number of CPUs and GPUs needed for each step
-part_1_walltime_hr = 24
+# Set the walltime, memory, and number of CPUs and GPUs needed
+# for each individual job, based on the part/section.
+part_1_walltime_hr = 0.25
 part_1_memory_gb = 4
 part_1_cpu_int = 1
 part_1_gpu_int = 0
 
-part_2_walltime_hr = 24
+part_2_walltime_hr = 0.5
 part_2_memory_gb = 4
 part_2_cpu_int = 1
-part_2_gpu_int = 0
+part_2_gpu_int = 1
 
-part_3_walltime_hr = 128
+part_3_walltime_hr = 0.75
 part_3_memory_gb = 4
 part_3_cpu_int = 1
 part_3_gpu_int = 0
 
-part_4_walltime_hr = 368
+part_4_walltime_hr = 1
 part_4_memory_gb = 4
 part_4_cpu_int = 1
 part_4_gpu_int = 0
