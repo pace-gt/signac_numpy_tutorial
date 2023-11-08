@@ -246,8 +246,8 @@ def part_3b_numpy_calcs_completed_properly(job):
         with open(job.fn(output_log_file), "r") as fp:
             output_line = fp.readlines()
             for i, line in enumerate(output_line):
-                if "Numpy" in line:
-                    split_move_line = line.split()
+                split_move_line = line.split()
+                if "Numpy" in line and len(split_move_line) == 3:
                     if (
                         split_move_line[0] == "Numpy"
                         and split_move_line[1] == "Calculations"
