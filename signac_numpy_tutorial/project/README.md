@@ -23,10 +23,10 @@ python project.py submit -o <part_x_this_does_a_function_y>
 
 
 Additionally, can run the following flags for the  `run` or `submit` commands, controlling the how the jobs are executed or submitted to the HPC:
- - `--bundle=2` : Only available when using `submit`.  This bundles multiple jobs (2 in this case) into a single run or HPC submittion script, auto adjusting the time, CPU cores, etc., based on the total command selections.
+ - `--bundle 2` : Only available when using `submit`.  This bundles multiple jobs (2 in this case) into a single run or HPC submittion script, auto adjusting the time, CPU cores, etc., based on the total command selections.
   - `--pretend` : Only available when using `submit`.  This is used to output what the submission script will look like, without submitting it to the HPC. 
  - See the `signac` documenation for more information and features.
- - `--parallel=2` : This runs this many jobs in parallel (2 in this case) into a single run or HPC submittion script, auto adjusting the time, CPU cores, etc., based on the total command selections.
+ - `--parallel 2` : This runs this many jobs in parallel (2 in this case) into a single run or HPC submittion script, auto adjusting the time, CPU cores, etc., based on the total command selections.
 
 
  ## templates directory and hpc_setup.py file
