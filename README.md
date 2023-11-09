@@ -13,6 +13,8 @@ Using `signac` workflows provide the following benefits:
  
  - These `signac` workflows also allow colleagues to quickly transfer their workflows to each other, and easily add new state points to a project, without the fear of rerunning the original state points.  
 
+ - Please also see the [signac website](https://signac.io/), which outlines some of the other major features. 
+
 
 ### Overview
 
@@ -103,9 +105,9 @@ Run all available `part 4` sections of the project locally with the `run` comman
 python project.py run -o part_4_analysis_replicate_averages_command
 ```
 
-Additionally, can run the following flags for the  `run` or `submit` commands, controlling the how the jobs are executed or submitted to the HPC:
- - `--parallel 2` : This runs this many jobs in parallel (2 in this case) into a single run or HPC submittion script, auto adjusting the time, CPU cores, etc., based on the total command selections.
- - See the `signac` documenation for more information and features.
+Additionally, you can run the following flags for the  `run` command, controlling the how the jobs are executed on the local machine (does not produce HPC job submission scripts):
+ - `--parallel 2` : This only works this way when using `run`. This runs several jobs in parallel (2 in this case) at a time on the local machine, auto adjusting the time, CPU cores, etc., based on the total command selections.
+ - See the `signac` [documenation](https://docs.signac.io/en/latest/) for more information, features, and the [Project Command Line Interface](https://docs.signac.io/projects/flow/en/latest/project-cli.html).
 
 
 ### Submit the Workflow Jobs to an HPC.  
@@ -159,8 +161,8 @@ Submit all available `part 4` sections of the project to the HPC with the `submi
 python project.py submit -o part_4_analysis_replicate_averages_command
 ```
 
-Additionally, can run the following flags for the  `run` or `submit` commands, controlling the how the jobs are executed or submitted to the HPC:
+Additionally, you can run the following flags for the `submit` command, controlling the how the jobs are submitted to the HPC:
  - `--bundle 2` : Only available when using `submit`.  This bundles multiple jobs (2 in this case) into a single run or HPC submittion script, auto adjusting the time, CPU cores, etc., based on the total command selections.
   - `--pretend` : Only available when using `submit`.  This is used to output what the submission script will look like, without submitting it to the HPC. 
- - See the `signac` documenation for more information and features.
- - `--parallel 2` : This runs this many jobs in parallel (2 in this case) into a single run or HPC submittion script, auto adjusting the time, CPU cores, etc., based on the total command selections.
+  - `--parallel` : This only works this way when using `submit`.  The `N` value in `--parallel N` is not readl; therefore, it only runs all the jobs in a HPC submittion script at the same time (in parallel), auto adjusting the time, CPU cores, etc., based on the total command selections. 
+  - See the `signac` [documenation](https://docs.signac.io/en/latest/) for more information, features, and the [Project Command Line Interface](https://docs.signac.io/projects/flow/en/latest/project-cli.html).
