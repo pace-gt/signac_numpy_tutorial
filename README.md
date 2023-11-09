@@ -13,6 +13,8 @@ Using `signac` workflows provide the following benefits:
  
  - These `signac` workflows also allow colleagues to quickly transfer their workflows to each other, and easily add new state points to a project, without the fear of rerunning the original state points.  
 
+ - Please also see the [signac website](https://signac.io/), which outlines some of the other major features. 
+
 
 ### Overview
 
