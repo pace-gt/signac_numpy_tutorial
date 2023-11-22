@@ -120,6 +120,11 @@ def part_1_initial_parameters_completed(job):
 def part_1_initial_parameters_command(job):
     """Set the system's job parameters in the json file."""
     
+    # If any previous replicate averages and std_devs exist delete them, 
+    # because they will need recalculated as more state points were added.
+    if os.path.isfile(f'../../analysis/{output_avg_std_of_replicates_txt_filename}.txt'):
+        os.remove(f'../../analysis/{output_avg_std_of_replicates_txt_filename}.txt')
+
     # Note: the sp=setpoint variables (from init.py file), doc=user documented variables
 
     # Creating a new json file with user built variables (doc)
@@ -191,6 +196,11 @@ def part_2_write_numpy_input_written(job):
 )
 def part_2_write_numpy_input_command(job):
     """write the numpy input"""
+
+    # If any previous replicate averages and std_devs exist delete them, 
+    # because they will need recalculated as more state points were added.
+    if os.path.isfile(f'../../analysis/{output_avg_std_of_replicates_txt_filename}.txt'):
+        os.remove(f'../../analysis/{output_avg_std_of_replicates_txt_filename}.txt')
 
     # get the integer values in the created json file with a random number generater
     numpy_input_value_0_int = int(int(job.doc.value_0_int) * 
@@ -349,6 +359,12 @@ def part_3_numpy_calcs_command(job):
 @Project.label
 def part_4_analysis_replica_averages_completed(*jobs):
     """Check that the replicate numpy averages files are written ."""
+
+    # If any previous replicate averages and std_devs exist delete them, 
+    # because they will need recalculated as more state points were added.
+    if os.path.isfile(f'../../analysis/{output_avg_std_of_replicates_txt_filename}.txt'):
+        os.remove(f'../../analysis/{output_avg_std_of_replicates_txt_filename}.txt')
+
     file_written_bool_list = []
     all_file_written_bool_pass = False
     for job in jobs:
