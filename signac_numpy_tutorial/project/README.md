@@ -3,6 +3,13 @@
 
 ### Overview
 All the `signac` commands are run from the `<local_path>/signac_numpy_tutorial/signac_numpy_tutorial/project` directory, which include, but are not limited to the following commands:
+
+This can be done at the start of a new project, but is not always required. If you moved the directory after starting a project or signac can not find the path correctly, you will need to run the following command (`signac init`) from the `project` directory:
+
+```bash
+signac init
+```
+
  - State point initialization.
 ```bash
 python init.py
