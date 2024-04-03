@@ -128,7 +128,7 @@ def part_1_initial_parameters_completed(job):
     {
         "np": part_1_np_or_ntasks_int,
         "cpus-per-task": part_1_cpus_per_task_int,
-        "ngpu": part_1_gpus_per_task_int,
+        "gpus-per-task": part_1_gpus_per_task_int,
         "mem-per-cpu": part_1_mem_per_cpu_gb,
         "walltime": part_1_walltime_hr,
     }, with_job=True
@@ -206,7 +206,7 @@ def part_2_write_numpy_input_written(job):
     {
         "np": part_2_np_or_ntask_int,
         "cpus-per-task": part_2_cpus_per_task_int,
-        "ngpu": part_2_gpus_per_task_int,
+        "gpus-per-task": part_2_gpus_per_task_int,
         "mem-per-cpu": part_2_mem_per_cpu_gb,
         "walltime": part_2_walltime_hr,
     }, with_job=True
@@ -294,7 +294,7 @@ def part_3b_numpy_calcs_completed_properly(job):
     {
         "np": part_3_np_or_ntask_int,
         "cpus-per-task": part_3_cpus_per_task_int,
-        "ngpu": part_3_gpus_per_task_int,
+        "gpus-per-task": part_3_gpus_per_task_int,
         "mem-per-cpu": part_3_mem_per_cpu_gb,
         "walltime": part_3_walltime_hr,
     }, with_job=True, cmd=True
@@ -410,7 +410,7 @@ def part_4_analysis_replica_averages_completed(*jobs):
      {
         "np": part_4_np_or_ntask_int,
         "cpus-per-task": part_4_cpus_per_task_int,
-        "ngpu": part_4_gpus_per_task_int,
+        "gpus-per-task": part_4_gpus_per_task_int,
         "mem-per-cpu": part_4_mem_per_cpu_gb,
         "walltime": part_4_walltime_hr,
     }, aggregator=aggregator.groupby(key=statepoint_without_replicate, sort_by="value_0_int", sort_ascending=False)
