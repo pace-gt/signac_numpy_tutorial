@@ -56,36 +56,32 @@ output_avg_std_of_replicates_txt_filename = "output_avg_std_of_replicates_txt_fi
 # "part_2_mpi_1_threaded_0_bool" = 1 = MPI process.
 # "part_2_mpi_1_threaded_0_bool" = 0 = Threaded process.
 #
-# The "part_X_np_or_nprocess_int" should be 1 for most cases.
+# The "part_X_np_equal_ntasks_int" should be 1 for most cases.
 # Setting to a higher value will multiply
 # the CPUs, GPUs, and other parameters by its value 
 # that many cause more resources to be used than expected,
 # which may result in higher HPC or cloud computing costs!
 # *******************************************************
-part_1_np_or_nprocess_int = 1
-part_1_cpus_per_process_int = 1
-part_1_gpus_per_process_int = 0
+part_1_cpus_per_part_int = 1
+part_1_gpus_per_part_int = 0
 part_1_mem_per_cpu_gb = 4
 part_1_walltime_hr = 0.25
 part_1_mpi_1_threaded_0_bool = 1
 
-part_2_np_or_nprocess_int = 1
-part_2_cpus_per_process_int = 1
-part_2_gpus_per_process_int = 0
+part_2_cpus_per_part_int = 1
+part_2_gpus_per_part_int = 0
 part_2_mem_per_cpu_gb = 4
 part_2_walltime_hr = 0.5
 part_2_mpi_1_threaded_0_bool = 1
 
-part_3_np_or_nprocess_int = 1
-part_3_cpus_per_process_int = 1
-part_3_gpus_per_process_int = 1
+part_3_cpus_per_part_int = 12
+part_3_gpus_per_part_int = 1
 part_3_mem_per_cpu_gb = 4
 part_3_walltime_hr = 0.75
 part_3_mpi_1_threaded_0_bool = 1
 
-part_4_np_or_nprocess_int = 1
-part_4_cpus_per_process_int = 1
-part_4_gpus_per_process_int = 0
+part_4_cpus_per_part_int = 1
+part_4_gpus_per_part_int = 0
 part_4_mem_per_cpu_gb = 4
 part_4_walltime_hr = 1
 part_4_mpi_1_threaded_0_bool = 1
@@ -134,9 +130,9 @@ def part_1_initial_parameters_completed(job):
 @Project.post(part_1_initial_parameters_completed)
 @Project.operation(directives=
     {
-        "np": part_1_np_or_nprocess_int,
-        "cpus-per-process": part_1_cpus_per_process_int,
-        "gpus-per-process": part_1_gpus_per_process_int,
+        "np": part_1_cpus_per_part_int if part_1_mpi_1_threaded_0_bool == 1 else 1,
+        "cpus-per-part": part_1_cpus_per_part_int,
+        "gpus-per-part": part_1_gpus_per_part_int,
         "mem-per-cpu": part_1_mem_per_cpu_gb,
         "walltime": part_1_walltime_hr,
         "mpi-1-threaded-0": part_1_mpi_1_threaded_0_bool
@@ -213,9 +209,9 @@ def part_2_write_numpy_input_written(job):
 @Project.post(part_2_write_numpy_input_written)
 @Project.operation(directives=
     {
-        "np": part_2_np_or_nprocess_int,
-        "cpus-per-process": part_2_cpus_per_process_int,
-        "gpus-per-process": part_2_gpus_per_process_int,
+        "np": part_2_cpus_per_part_int if part_2_mpi_1_threaded_0_bool == 1 else 1,
+        "cpus-per-part": part_2_cpus_per_part_int,
+        "gpus-per-part": part_2_gpus_per_part_int,
         "mem-per-cpu": part_2_mem_per_cpu_gb,
         "walltime": part_2_walltime_hr,
         "mpi-1-threaded-0": part_2_mpi_1_threaded_0_bool
@@ -302,9 +298,9 @@ def part_3b_numpy_calcs_completed_properly(job):
 @Project.post(part_3b_numpy_calcs_completed_properly)
 @Project.operation(directives=
     {
-        "np": part_3_np_or_nprocess_int,
-        "cpus-per-process": part_3_cpus_per_process_int,
-        "gpus-per-process": part_3_gpus_per_process_int,
+        "np": part_3_cpus_per_part_int if part_3_mpi_1_threaded_0_bool == 1 else 1,
+        "cpus-per-part": part_3_cpus_per_part_int,
+        "gpus-per-part": part_3_gpus_per_part_int,
         "mem-per-cpu": part_3_mem_per_cpu_gb,
         "walltime": part_3_walltime_hr,
         "mpi-1-threaded-0": part_3_mpi_1_threaded_0_bool
@@ -419,9 +415,9 @@ def part_4_analysis_replica_averages_completed(*jobs):
 @Project.post(part_4_analysis_replica_averages_completed)
 @Project.operation(directives=
      {
-        "np": part_4_np_or_nprocess_int,
-        "cpus-per-process": part_4_cpus_per_process_int,
-        "gpus-per-process": part_4_gpus_per_process_int,
+        "np": part_4_cpus_per_part_int if part_4_mpi_1_threaded_0_bool == 1 else 1,
+        "cpus-per-part": part_4_cpus_per_part_int,
+        "gpus-per-part": part_4_gpus_per_part_int,
         "mem-per-cpu": part_4_mem_per_cpu_gb,
         "walltime": part_4_walltime_hr,
         "mpi-1-threaded-0": part_4_mpi_1_threaded_0_bool
