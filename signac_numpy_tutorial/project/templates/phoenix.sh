@@ -3,29 +3,49 @@
 {% block header %}
 {% set np = operations|map(attribute='directives.np')|sum %}
 {% set mem_per_cpu = operations|map(attribute='directives.mem-per-cpu')|max %}
-{% set cpus_per_task = operations|map(attribute='directives.cpus-per-task')|max  %}
-{% set gpus_per_task = operations|map(attribute='directives.gpus-per-task')|max  %}
+{% set cpus_per_process = operations|map(attribute='directives.cpus-per-process')|max  %}
+{% set gpus_per_process = operations|map(attribute='directives.gpus-per-process')|max  %}
+{% set mpi_1_threaded_0 = operations|map(attribute='directives.mpi-1-threaded-0')|max  %}
+
 
     {{- super () -}}
 
-{% if gpus_per_task %}
-#SBATCH -p gpu-a100
-#SBATCH --gres gpu:{{ np_global * gpus_per_task }}
-#SBATCH --gpus-per-task={{ gpus_per_task }}
+#SBATCH -A phx-pace-staff
+#SBATCH -q inferno
+#SBATCH --output=/dev/null
+#SBATCH --error=/dev/null
+#SBATCH -N 1
+#SBATCH --ntasks-per-node={{ np_global }}
+#SBATCH --mem-per-cpu={{ mem_per_cpu }}G
 
-{%- else %}
+{% if gpus_per_process > 0 %}
+#SBATCH -p gpu-a100
+
+    {% if mpi_1_threaded_0 == 1 %}
+    #SBATCH --gres gpu:{{ np_global * gpus_per_process }}
+    #SBATCH --gpus-per-task={{ np_global }}
+
+    {% elif mpi_1_threaded_0 == 0 %}
+    #SBATCH --gres gpu:{{ np_global * gpus_per_process }}
+    #SBATCH --gpus-per-task={{ gpus_per_process }}
+
+    {%- endif %}
+
+{%- endif %}
+
+{% if gpus_per_process == 0 %}
 #SBATCH -p cpu-small
 
 {%- endif %}
 
-#SBATCH -A phx-pace-staff
-#SBATCH -N 1
-#SBATCH --ntasks-per-node={{ np_global }}
-#SBATCH --cpus-per-task={{ cpus_per_task }}
-#SBATCH -q inferno
-#SBATCH --output=/dev/null
-#SBATCH --error=/dev/null
-#SBATCH --mem-per-cpu={{ mem_per_cpu }}G
+{% if mpi_1_threaded_0 == 1 %}
+#SBATCH --cpus-per-task={{ np_global }}
+
+{% elif mpi_1_threaded_0 == 0 %}
+#SBATCH --cpus-per-task={{ cpus_per_process }}
+
+{%- endif %}
+
 
 echo  "Running on host" hostname
 echo  "Time is" date
