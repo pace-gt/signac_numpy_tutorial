@@ -83,7 +83,7 @@ part_1_cpus_int = 1
 part_1_gpus_int = 1
 part_1_mem_per_cpu_gb = 4
 part_1_walltime_hr = 0.25
-part_1_mpi_1_threaded_0_bool = 1
+part_1_mpi_1_threaded_0_bool = 0
 
 part_2_cpus_int = 1
 part_2_gpus_int = 0
@@ -91,7 +91,7 @@ part_2_mem_per_cpu_gb = 4
 part_2_walltime_hr = 0.5
 part_2_mpi_1_threaded_0_bool = 0
 
-part_3_cpus_int = 1
+part_3_cpus_int = 12
 part_3_gpus_int = 1
 part_3_mem_per_cpu_gb = 4
 part_3_walltime_hr = 0.75
@@ -148,8 +148,8 @@ def part_1_initial_parameters_completed(job):
 @Project.operation(directives=
     {
         "np": part_1_cpus_int if part_1_mpi_1_threaded_0_bool == 1 else 1,
-        "cpus-per-part": part_1_cpus_int,
-        "gpus-per-part": part_1_gpus_int,
+        "cpus-per-unique-job": part_1_cpus_int,
+        "gpus-per-unique-job": part_1_gpus_int,
         "mem-per-cpu": part_1_mem_per_cpu_gb,
         "walltime": part_1_walltime_hr,
         "mpi-1-threaded-0": part_1_mpi_1_threaded_0_bool
@@ -227,8 +227,8 @@ def part_2_write_numpy_input_written(job):
 @Project.operation(directives=
     {
         "np": part_2_cpus_int if part_2_mpi_1_threaded_0_bool == 1 else 1,
-        "cpus-per-part": part_2_cpus_int,
-        "gpus-per-part": part_2_gpus_int,
+        "cpus-per-unique-job": part_2_cpus_int,
+        "gpus-per-unique-job": part_2_gpus_int,
         "mem-per-cpu": part_2_mem_per_cpu_gb,
         "walltime": part_2_walltime_hr,
         "mpi-1-threaded-0": part_2_mpi_1_threaded_0_bool
@@ -316,8 +316,8 @@ def part_3b_numpy_calcs_completed_properly(job):
 @Project.operation(directives=
     {
         "np": part_3_cpus_int if part_3_mpi_1_threaded_0_bool == 1 else 1,
-        "cpus-per-part": part_3_cpus_int,
-        "gpus-per-part": part_3_gpus_int,
+        "cpus-per-unique-job": part_3_cpus_int,
+        "gpus-per-unique-job": part_3_gpus_int,
         "mem-per-cpu": part_3_mem_per_cpu_gb,
         "walltime": part_3_walltime_hr,
         "mpi-1-threaded-0": part_3_mpi_1_threaded_0_bool
@@ -433,8 +433,8 @@ def part_4_analysis_replica_averages_completed(*jobs):
 @Project.operation(directives=
      {
         "np": part_4_cpus_int if part_4_mpi_1_threaded_0_bool == 1 else 1,
-        "cpus-per-part": part_4_cpus_int,
-        "gpus-per-part": part_4_gpus_int,
+        "cpus-per-unique-job": part_4_cpus_int,
+        "gpus-per-unique-job": part_4_gpus_int,
         "mem-per-cpu": part_4_mem_per_cpu_gb,
         "walltime": part_4_walltime_hr,
         "mpi-1-threaded-0": part_4_mpi_1_threaded_0_bool
