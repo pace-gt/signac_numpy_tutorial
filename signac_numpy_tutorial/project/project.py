@@ -65,8 +65,8 @@ output_avg_std_of_replicates_txt_filename = "output_avg_std_of_replicates_txt_fi
 # *******************************************************
 
 part_1_ntask_int = 1
-part_1_cpus_per_task_int = 2
-part_1_gpus_per_task_int = 2
+part_1_cpus_per_task_int = 1
+part_1_gpus_per_task_int = 0
 part_1_mem_per_cpu_gb = 4
 part_1_walltime_hr = 0.25
 
