@@ -14,13 +14,12 @@
 #SBATCH --error=/dev/null
 #SBATCH -N 1
 #SBATCH --ntasks-per-node={{ np_global }}
+#SBATCH --cpus-per-task={{ cpus_per_task }}
 #SBATCH --mem-per-cpu={{ mem_per_cpu }}G
 
 {% if gpus_per_task == 0 %}
 #SBATCH -p cpu-small
 {%- endif %}
-
-#SBATCH --cpus-per-task={{ cpus_per_task }}
 
 {% if gpus_per_task > 0 %}
 #SBATCH -p gpu-a100
