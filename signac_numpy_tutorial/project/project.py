@@ -3,6 +3,7 @@
 
 import os
 import numpy as np
+import warnings
 
 import flow
 from flow import FlowProject, aggregator
@@ -50,37 +51,42 @@ output_avg_std_of_replicates_txt_filename = "output_avg_std_of_replicates_txt_fi
 # Set the walltime, memory, and number of CPUs and GPUs needed
 # for each individual job, based on the part/section.
 # *******************************************************
-# *******************  WARNING  ************************* 
-# The "part_X_np_or_ntasks_int" should be 1 for most cases.
-# Setting to a higher value will multiply
-# the CPUs, GPUs, and other parameters by its value 
-# that many cause more resources to be used than expected,
-# which may result in higher HPC or cloud computing costs!
+# *******************   Notes   ************************* 
+# The following input parameters are all entered as if 
+# you were doing a single job when submitting a single 
+# schedular script, or running it as single job locally:
+# - part_1_ntasks_int = integer
+# - part_1_cpus_per_task_int = integer
+# - part_1_gpus_per_task_int = integer
+# - part_1_mem_per_cpu_gb  = integer or float
+# - part_1_walltime_hr = integer or float
+# *******************   Notes   ************************* 
 # *******************************************************
-part_1_np_or_ntasks_int = 1
-part_1_cpus_per_task_int = 1
-part_1_gpus_per_task_int = 0
+# *******************************************************
+
+part_1_ntask_int = 1
+part_1_cpus_per_task_int = 2
+part_1_gpus_per_task_int = 2
 part_1_mem_per_cpu_gb = 4
 part_1_walltime_hr = 0.25
 
-part_2_np_or_ntask_int = 1
+part_2_ntask_int = 1
 part_2_cpus_per_task_int = 1
 part_2_gpus_per_task_int = 0
 part_2_mem_per_cpu_gb = 4
 part_2_walltime_hr = 0.5
 
-part_3_np_or_ntask_int = 1
+part_3_ntask_int = 1
 part_3_cpus_per_task_int = 1
 part_3_gpus_per_task_int = 1
 part_3_mem_per_cpu_gb = 4
 part_3_walltime_hr = 0.75
 
-part_4_np_or_ntask_int = 1
+part_4_ntask_int = 1
 part_4_cpus_per_task_int = 1
 part_4_gpus_per_task_int = 0
 part_4_mem_per_cpu_gb = 4
 part_4_walltime_hr = 1
-
 
 # ******************************************************
 # ******************************************************
@@ -89,7 +95,6 @@ part_4_walltime_hr = 1
 # ******************************************************
 # ******************************************************
 # ******************************************************
-
 
 # ******************************************************
 # ******************************************************
@@ -120,13 +125,11 @@ def part_1_initial_parameters_completed(job):
 
     return data_written_bool
 
-#"memory": part_1_memory_gb
-
 
 @Project.post(part_1_initial_parameters_completed)
 @Project.operation(directives=
     {
-        "np": part_1_np_or_ntasks_int,
+        "np": part_1_ntask_int,
         "cpus-per-task": part_1_cpus_per_task_int,
         "gpus-per-task": part_1_gpus_per_task_int,
         "mem-per-cpu": part_1_mem_per_cpu_gb,
@@ -204,7 +207,7 @@ def part_2_write_numpy_input_written(job):
 @Project.post(part_2_write_numpy_input_written)
 @Project.operation(directives=
     {
-        "np": part_2_np_or_ntask_int,
+        "np": part_2_ntask_int,
         "cpus-per-task": part_2_cpus_per_task_int,
         "gpus-per-task": part_2_gpus_per_task_int,
         "mem-per-cpu": part_2_mem_per_cpu_gb,
@@ -292,7 +295,7 @@ def part_3b_numpy_calcs_completed_properly(job):
 @Project.post(part_3b_numpy_calcs_completed_properly)
 @Project.operation(directives=
     {
-        "np": part_3_np_or_ntask_int,
+        "np": part_3_ntask_int,
         "cpus-per-task": part_3_cpus_per_task_int,
         "gpus-per-task": part_3_gpus_per_task_int,
         "mem-per-cpu": part_3_mem_per_cpu_gb,
@@ -408,7 +411,7 @@ def part_4_analysis_replica_averages_completed(*jobs):
 @Project.post(part_4_analysis_replica_averages_completed)
 @Project.operation(directives=
      {
-        "np": part_4_np_or_ntask_int,
+        "np": part_1_ntask_int,
         "cpus-per-task": part_4_cpus_per_task_int,
         "gpus-per-task": part_4_gpus_per_task_int,
         "mem-per-cpu": part_4_mem_per_cpu_gb,
@@ -524,9 +527,4 @@ if __name__ == "__main__":
     pr = Project()
     pr.main()
 # ******************************************************
-# ******************************************************
-# ******************************************************
-# SIGNACS'S ENDING CODE SECTION (END)
-# ******************************************************
-# ******************************************************
-# ******************************************************
+# *******
