@@ -3,6 +3,7 @@
 
 import os
 import numpy as np
+import warnings
 
 import flow
 from flow import FlowProject, aggregator
@@ -54,8 +55,8 @@ output_avg_std_of_replicates_txt_filename = "output_avg_std_of_replicates_txt_fi
 # The following input parameters are all entered as if 
 # you were doing a single job when submitting a single 
 # schedular script, or running it as single job locally:
-# - part_1_cpus_int = integer
-# - part_1_gpus_int = integer
+# - part_a_cpus_per_job_int = integer
+# - part_1_gpus_per_job_int = integer
 # - part_1_mem_per_cpu_gb  = integer or float
 # - part_1_walltime_hr = integer or float
 # *******************   Notes   ************************* 
@@ -65,6 +66,8 @@ output_avg_std_of_replicates_txt_filename = "output_avg_std_of_replicates_txt_fi
 # The "part_X_mpi_1_threaded_0_bool" (boolean as 1 or 0 only) 
 # variable selects if your process will be run as a 
 # MPI process or a threaded process.
+# Note: This does NOT do MPI with (and) multi-threaded processes, 
+# which would require a different setup.
 # "part_X_mpi_1_threaded_0_bool" = 1 = MPI process.
 # "part_X_mpi_1_threaded_0_bool" = 0 = multi-threaded process.
 #
@@ -77,28 +80,39 @@ output_avg_std_of_replicates_txt_filename = "output_avg_std_of_replicates_txt_fi
 # This can always be checked using the "--pretend" command 
 # in signac to show the Slurm input script it will submit, 
 # without actually submitting it. 
+#
+# **** WHEN USING MPI - see notes below ****
+# NOTE: IF 'part_x_gpus_per_job_int' >= 'part_x_cpus_per_job_int':
+# - 'part_x_gpus_per_job_int' / 'part_x_cpus_per_job_int' must be an int. 
+# GPUs will be set as '--gpus-per-task' in the Slurm Script, 
+#
+# NOTE: IF 'part_x_gpus_per_job_int' < 'part_x_cpus_per_job_int':
+# - removing '--gpus-per-task' and only using '--gres gpu:'part_x_gpus_per_job_int.'
+# If using all the GPUs for each MPI task is not the desired behavior, 
+# please modifity the 'templates/phoenix.sh' file obtain the desired behavior.
+# **** WHEN USING MPI - see notes above ****
 # *******************  WARNING  ************************* 
 # *******************************************************
-part_1_cpus_int = 1
-part_1_gpus_int = 1
+part_1_cpus_per_job_int = 1
+part_1_gpus_per_job_int = 4
 part_1_mem_per_cpu_gb = 4
 part_1_walltime_hr = 0.25
 part_1_mpi_1_threaded_0_bool = 0
 
-part_2_cpus_int = 1
-part_2_gpus_int = 0
+part_2_cpus_per_job_int = 1
+part_2_gpus_per_job_int = 0
 part_2_mem_per_cpu_gb = 4
 part_2_walltime_hr = 0.5
 part_2_mpi_1_threaded_0_bool = 0
 
-part_3_cpus_int = 12
-part_3_gpus_int = 1
+part_3_cpus_per_job_int = 12
+part_3_gpus_per_job_int = 1
 part_3_mem_per_cpu_gb = 4
 part_3_walltime_hr = 0.75
 part_3_mpi_1_threaded_0_bool = 1
 
-part_4_cpus_int = 1
-part_4_gpus_int = 0
+part_4_cpus_per_job_int = 1
+part_4_gpus_per_job_int = 0
 part_4_mem_per_cpu_gb = 4
 part_4_walltime_hr = 1
 part_4_mpi_1_threaded_0_bool = 1
@@ -111,6 +125,148 @@ part_4_mpi_1_threaded_0_bool = 1
 # ******************************************************
 # ******************************************************
 
+# ******************************************************
+# ******************************************************
+# ******************************************************
+# CHECK USER VARIBLES THAT ARE POSSIBLE (START)
+# ******************************************************
+# ******************************************************
+# ******************************************************
+
+# checking the input values for Part #1
+if not isinstance(part_1_cpus_per_job_int, int) or part_1_cpus_per_job_int < 1:
+    raise TypeError(f"ERROR: 'part_1_cpus_per_job_int' is not an int or < 1.")
+if not isinstance(part_1_gpus_per_job_int, int) or part_1_gpus_per_job_int < 0 or part_1_gpus_per_job_int > 8:
+    raise TypeError(f"ERROR: 'part_1_gpus_per_job_int' is not an int or < 0 or > 8 (setup for 1 node and max 8 gpus to a node).")
+if not isinstance(part_1_mem_per_cpu_gb, (float, int)) or part_1_mem_per_cpu_gb < 0:
+    raise TypeError(f"ERROR: 'part_1_mem_per_cpu_gb' is not an int or float, or < 0.")
+if not isinstance(part_1_walltime_hr, (float, int)) or part_1_walltime_hr < 0:
+    raise TypeError(f"ERROR: 'part_1_walltime_hr' is not an int or float, or < 0.")
+if not isinstance(part_1_mpi_1_threaded_0_bool, int) or part_1_mpi_1_threaded_0_bool not in [0, 1]:
+    raise TypeError(f"ERROR: 'part_1_mpi_1_threaded_0_bool' is not an int of 0 or 1.")
+if part_1_mpi_1_threaded_0_bool == 1:
+    if part_1_cpus_per_job_int > part_1_gpus_per_job_int:
+        warnings.warn(
+            f"WARNING: 'part_1_cpus_per_job_int' > 'part_1_gpus_per_job_int' " 
+            f"which can not happen in MPI when settting '--gpus-per-task' "
+            f"in the Slurm Script. Therefore, removing '--gpus-per-task' " 
+            f"and only using '--gres gpu:'part_1_gpus_per_job_int''. "
+            f"If using all the GPUs for each MPI task is not the desired behavior, "
+            f"please modifity the 'templates/phoenix.sh' file obtain the desired behavior."
+        )
+    if part_1_cpus_per_job_int < part_1_gpus_per_job_int:
+        gpus_div_cpu_is_int_bool = False
+        for possible_no_gpus_i in range(1, 8 + 1):
+            if np.isclose(part_1_gpus_per_job_int / part_1_cpus_per_job_int, possible_no_gpus_i):
+                gpus_div_cpu_is_int_bool = True
+        if gpus_div_cpu_is_int_bool is False:
+            raise TypeError(
+                f"ERROR: 'part_1_gpus_per_job_int' / 'part_1_cpus_per_job_int', "
+                f"must be an int > 0."
+                )
+
+# checking the input values for Part #2
+if not isinstance(part_2_cpus_per_job_int, int) or part_2_cpus_per_job_int < 1:
+    raise TypeError(f"ERROR: 'part_2_cpus_per_job_int' is not an int or < 1.")
+if not isinstance(part_2_gpus_per_job_int, int) or part_2_gpus_per_job_int < 0 or part_2_gpus_per_job_int > 8:
+    raise TypeError(f"ERROR: 'part_2_gpus_per_job_int' is not an int or < 0 or > 8 (setup for 1 node and max 8 gpus to a node).")
+if not isinstance(part_2_mem_per_cpu_gb, (float, int)) or part_2_mem_per_cpu_gb < 0:
+    raise TypeError(f"ERROR: 'part_2_mem_per_cpu_gb' is not an int or float, or < 0.")
+if not isinstance(part_2_walltime_hr, (float, int)) or part_2_walltime_hr < 0:
+    raise TypeError(f"ERROR: 'part_2_walltime_hr' is not an int or float, or < 0.")
+if not isinstance(part_2_mpi_1_threaded_0_bool, int) or part_2_mpi_1_threaded_0_bool not in [0, 1]:
+    raise TypeError(f"ERROR: 'part_2_mpi_1_threaded_0_bool' is not an int of 0 or 1.")
+if part_2_mpi_1_threaded_0_bool == 1:
+    if part_2_cpus_per_job_int > part_2_gpus_per_job_int:
+        warnings.warn(
+            f"WARNING: 'part_2_cpus_per_job_int' > 'part_2_gpus_per_job_int' " 
+            f"which can not happen in MPI when settting '--gpus-per-task' "
+            f"in the Slurm Script. Therefore, removing '--gpus-per-task' " 
+            f"and only using '--gres gpu:'part_2_gpus_per_job_int''. "
+            f"If using all the GPUs for each MPI task is not the desired behavior, "
+            f"please modifity the 'templates/phoenix.sh' file obtain the desired behavior."
+        )
+    if part_2_cpus_per_job_int < part_2_gpus_per_job_int:
+        gpus_div_cpu_is_int_bool = False
+        for possible_no_gpus_i in range(1, 8 + 1):
+            if np.isclose(part_2_gpus_per_job_int / part_2_cpus_per_job_int, possible_no_gpus_i):
+                gpus_div_cpu_is_int_bool = True
+        if gpus_div_cpu_is_int_bool is False:
+            raise TypeError(
+                f"ERROR: 'part_2_gpus_per_job_int' / 'part_2_cpus_per_job_int', "
+                f"must be an int > 0."
+                )
+
+# checking the input values for Part #3
+if not isinstance(part_3_cpus_per_job_int, int) or part_3_cpus_per_job_int < 1:
+    raise TypeError(f"ERROR: 'part_3_cpus_per_job_int' is not an int or < 1.")
+if not isinstance(part_3_gpus_per_job_int, int) or part_3_gpus_per_job_int < 0 or part_3_gpus_per_job_int > 8:
+    raise TypeError(f"ERROR: 'part_3_gpus_per_job_int' is not an int or < 0 or > 8 (setup for 1 node and max 8 gpus to a node).")
+if not isinstance(part_3_mem_per_cpu_gb, (float, int)) or part_3_mem_per_cpu_gb < 0:
+    raise TypeError(f"ERROR: 'part_3_mem_per_cpu_gb' is not an int or float, or < 0.")
+if not isinstance(part_3_walltime_hr, (float, int)) or part_3_walltime_hr < 0:
+    raise TypeError(f"ERROR: 'part_3_walltime_hr' is not an int or float, or < 0.")
+if not isinstance(part_3_mpi_1_threaded_0_bool, int) or part_3_mpi_1_threaded_0_bool not in [0, 1]:
+    raise TypeError(f"ERROR: 'part_3_mpi_1_threaded_0_bool' is not an int of 0 or 1.")
+if part_3_mpi_1_threaded_0_bool == 1:
+    if part_3_cpus_per_job_int > part_3_gpus_per_job_int:
+        warnings.warn(
+            f"WARNING: 'part_3_cpus_per_job_int' > 'part_3_gpus_per_job_int' " 
+            f"which can not happen in MPI when settting '--gpus-per-task' "
+            f"in the Slurm Script. Therefore, removing '--gpus-per-task' " 
+            f"and only using '--gres gpu:'part_3_gpus_per_job_int''. "
+            f"If using all the GPUs for each MPI task is not the desired behavior, "
+            f"please modifity the 'templates/phoenix.sh' file obtain the desired behavior."
+        )
+    if part_3_cpus_per_job_int < part_3_gpus_per_job_int:
+        gpus_div_cpu_is_int_bool = False
+        for possible_no_gpus_i in range(1, 8 + 1):
+            if np.isclose(part_3_gpus_per_job_int / part_3_cpus_per_job_int, possible_no_gpus_i):
+                gpus_div_cpu_is_int_bool = True
+        if gpus_div_cpu_is_int_bool is False:
+            raise TypeError(
+                f"ERROR: 'part_3_gpus_per_job_int' / 'part_3_cpus_per_job_int', "
+                f"must be an int > 0."
+                )
+
+# checking the input values for Part #4
+if not isinstance(part_4_cpus_per_job_int, int) or part_4_cpus_per_job_int < 1:
+    raise TypeError(f"ERROR: 'part_4_cpus_per_job_int' is not an int or < 1.")
+if not isinstance(part_4_gpus_per_job_int, int) or part_4_gpus_per_job_int < 0 or part_4_gpus_per_job_int > 8:
+    raise TypeError(f"ERROR: 'part_4_gpus_per_job_int' is not an int or < 0 or > 8 (setup for 1 node and max 8 gpus to a node).")
+if not isinstance(part_4_mem_per_cpu_gb, (float, int)) or part_4_mem_per_cpu_gb < 0:
+    raise TypeError(f"ERROR: 'part_4_mem_per_cpu_gb' is not an int or float, or < 0.")
+if not isinstance(part_4_walltime_hr, (float, int)) or part_4_walltime_hr < 0:
+    raise TypeError(f"ERROR: 'part_4_walltime_hr' is not an int or float, or < 0.")
+if not isinstance(part_4_mpi_1_threaded_0_bool, int) or part_4_mpi_1_threaded_0_bool not in [0, 1]:
+    raise TypeError(f"ERROR: 'part_4_mpi_1_threaded_0_bool' is not an int of 0 or 1.")
+if part_4_mpi_1_threaded_0_bool == 1:
+    if part_4_cpus_per_job_int > part_4_gpus_per_job_int:
+        warnings.warn(
+            f"WARNING: 'part_4_cpus_per_job_int' > 'part_4_gpus_per_job_int' " 
+            f"which can not happen in MPI when settting '--gpus-per-task' "
+            f"in the Slurm Script. Therefore, removing '--gpus-per-task' " 
+            f"and only using '--gres gpu:'part_4_gpus_per_job_int''. "
+            f"If using all the GPUs for each MPI task is not the desired behavior, "
+            f"please modifity the 'templates/phoenix.sh' file obtain the desired behavior."
+        )
+    if part_4_cpus_per_job_int < part_4_gpus_per_job_int:
+        gpus_div_cpu_is_int_bool = False
+        for possible_no_gpus_i in range(1, 8 + 1):
+            if np.isclose(part_4_gpus_per_job_int / part_4_cpus_per_job_int, possible_no_gpus_i):
+                gpus_div_cpu_is_int_bool = True
+        if gpus_div_cpu_is_int_bool is False:
+            raise TypeError(
+                f"ERROR: 'part_4_gpus_per_job_int' / '4_cpus_per_job_int', "
+                f"must be an int > 0."
+                )
+# ******************************************************
+# ******************************************************
+# ******************************************************
+# CHECK USER VARIBLES THAT ARE POSSIBLE (END)
+# ******************************************************
+# ******************************************************
+# ******************************************************
 
 # ******************************************************
 # ******************************************************
@@ -141,15 +297,13 @@ def part_1_initial_parameters_completed(job):
 
     return data_written_bool
 
-#"memory": part_1_memory_gb
-
 
 @Project.post(part_1_initial_parameters_completed)
 @Project.operation(directives=
     {
-        "np": part_1_cpus_int if part_1_mpi_1_threaded_0_bool == 1 else 1,
-        "cpus-per-unique-job": part_1_cpus_int,
-        "gpus-per-unique-job": part_1_gpus_int,
+        "np": part_1_cpus_per_job_int if part_1_mpi_1_threaded_0_bool == 1 else 1,
+        "cpus-per-unique-job": part_1_cpus_per_job_int,
+        "gpus-per-unique-job": part_1_gpus_per_job_int,
         "mem-per-cpu": part_1_mem_per_cpu_gb,
         "walltime": part_1_walltime_hr,
         "mpi-1-threaded-0": part_1_mpi_1_threaded_0_bool
@@ -226,9 +380,9 @@ def part_2_write_numpy_input_written(job):
 @Project.post(part_2_write_numpy_input_written)
 @Project.operation(directives=
     {
-        "np": part_2_cpus_int if part_2_mpi_1_threaded_0_bool == 1 else 1,
-        "cpus-per-unique-job": part_2_cpus_int,
-        "gpus-per-unique-job": part_2_gpus_int,
+        "np": part_2_cpus_per_job_int if part_2_mpi_1_threaded_0_bool == 1 else 1,
+        "cpus-per-unique-job": part_2_cpus_per_job_int,
+        "gpus-per-unique-job": part_2_gpus_per_job_int,
         "mem-per-cpu": part_2_mem_per_cpu_gb,
         "walltime": part_2_walltime_hr,
         "mpi-1-threaded-0": part_2_mpi_1_threaded_0_bool
@@ -315,9 +469,9 @@ def part_3b_numpy_calcs_completed_properly(job):
 @Project.post(part_3b_numpy_calcs_completed_properly)
 @Project.operation(directives=
     {
-        "np": part_3_cpus_int if part_3_mpi_1_threaded_0_bool == 1 else 1,
-        "cpus-per-unique-job": part_3_cpus_int,
-        "gpus-per-unique-job": part_3_gpus_int,
+        "np": part_3_cpus_per_job_int if part_3_mpi_1_threaded_0_bool == 1 else 1,
+        "cpus-per-unique-job": part_3_cpus_per_job_int,
+        "gpus-per-unique-job": part_3_gpus_per_job_int,
         "mem-per-cpu": part_3_mem_per_cpu_gb,
         "walltime": part_3_walltime_hr,
         "mpi-1-threaded-0": part_3_mpi_1_threaded_0_bool
@@ -432,9 +586,9 @@ def part_4_analysis_replica_averages_completed(*jobs):
 @Project.post(part_4_analysis_replica_averages_completed)
 @Project.operation(directives=
      {
-        "np": part_4_cpus_int if part_4_mpi_1_threaded_0_bool == 1 else 1,
-        "cpus-per-unique-job": part_4_cpus_int,
-        "gpus-per-unique-job": part_4_gpus_int,
+        "np": part_4_cpus_per_job_int if part_4_mpi_1_threaded_0_bool == 1 else 1,
+        "cpus-per-unique-job": part_4_cpus_per_job_int,
+        "gpus-per-unique-job": part_4_gpus_per_job_int,
         "mem-per-cpu": part_4_mem_per_cpu_gb,
         "walltime": part_4_walltime_hr,
         "mpi-1-threaded-0": part_4_mpi_1_threaded_0_bool

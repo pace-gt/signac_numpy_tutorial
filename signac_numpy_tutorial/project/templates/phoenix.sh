@@ -32,7 +32,9 @@
 
 {% if ( gpus_per_unique_job > 0 and np_max > 1 ) %}
 #SBATCH --gres gpu:{{ ( np_global / np_max * gpus_per_unique_job ) | int }}
-#SBATCH --gpus-per-task={{ gpus_per_unique_job }}
+{% if ( gpus_per_unique_job >= np_max ) %}
+#SBATCH --gpus-per-task={{ ( gpus_per_unique_job / np_max ) | int }}
+{%- endif %}
 {% elif ( gpus_per_unique_job > 0 and np_max == 1 ) %}
 #SBATCH --gres gpu:{{ np_global * gpus_per_unique_job }}
 #SBATCH --gpus-per-task={{ gpus_per_unique_job }}
