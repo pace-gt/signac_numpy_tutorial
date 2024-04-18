@@ -3,8 +3,8 @@
 {% block header %}
 {% set np_max = operations|map(attribute='directives.np')|max %}
 {% set mem_per_cpu = operations|map(attribute='directives.mem-per-cpu')|max %}
-{% set cpus_per_unique_job = operations|map(attribute='directives.cpus-per-unique-job')|max  %}
-{% set gpus_per_unique_job = operations|map(attribute='directives.gpus-per-unique-job')|max  %}
+{% set cpus_per_per_task = operations|map(attribute='directives.cpus-per-task')|max  %}
+{% set gpus_per_per_task = operations|map(attribute='directives.gpus-per-task')|max  %}
 
     {{- super () -}}
 
@@ -16,28 +16,16 @@
 #SBATCH --ntasks-per-node={{ np_global }}
 #SBATCH --mem-per-cpu={{ mem_per_cpu }}G
 
-{% if gpus_per_unique_job == 0 %}
+{% if gpus_per_per_task == 0 %}
 #SBATCH -p cpu-small
 {%- endif %}
-{% if np_max > 1 %}
-#SBATCH --cpus-per-task={{ 1 }}
-{% elif np_max == 1 %}
-#SBATCH --cpus-per-task={{ cpus_per_unique_job }}
-{%- endif %}
 
+#SBATCH --cpus-per-task={{ cpus_per_per_task }}
 
-{% if gpus_per_unique_job > 0 %}
+{% if gpus_per_per_task > 0 %}
 #SBATCH -p gpu-a100
-{%- endif %}
-
-{% if ( gpus_per_unique_job > 0 and np_max > 1 ) %}
-#SBATCH --gres gpu:{{ ( np_global / np_max * gpus_per_unique_job ) | int }}
-{% if ( gpus_per_unique_job >= np_max ) %}
-#SBATCH --gpus-per-task={{ ( gpus_per_unique_job / np_max ) | int }}
-{%- endif %}
-{% elif ( gpus_per_unique_job > 0 and np_max == 1 ) %}
-#SBATCH --gres gpu:{{ np_global * gpus_per_unique_job }}
-#SBATCH --gpus-per-task={{ gpus_per_unique_job }}
+#SBATCH --gres gpu:{{ np_global * gpus_per_per_task }}
+#SBATCH --gpus-per-task={{ gpus_per_per_task }}
 {%- endif %}
 
 
@@ -48,7 +36,7 @@ echo  "Time is" date
 module load anaconda3
 
 # Add any modules here needed only for the GPU versions
-{% if gpus_per_unique_job %}
+{% if gpus_per_per_task %}
 module load cuda/12.1.1-6oacj6
 {%- endif %}
 
