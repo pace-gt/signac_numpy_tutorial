@@ -50,6 +50,12 @@ output_avg_std_of_replicates_txt_filename = "output_avg_std_of_replicates_txt_fi
 
 # Set the walltime, memory, and number of CPUs and GPUs needed
 # for each individual job, based on the part/section.
+# *******************  WARNING  ************************* 
+# It is recommended to check all HPC submisstions with the
+# '--pretend' command so you do not make an errors requesting 
+# the CPUs, GPUs, and other parameters by its value 
+# that many cause more resources to be used than expected,
+# which may result in higher HPC or cloud computing costs!
 # *******************************************************
 # *******************   Notes   ************************* 
 # The following input parameters are all entered as if 
