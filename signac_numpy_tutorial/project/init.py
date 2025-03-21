@@ -3,6 +3,8 @@
 import os
 import numpy as np
 import signac
+import shutil
+import time
 
 # *******************************************
 # ENTER THE MAIN USER STATEPOINTS (START)
@@ -17,6 +19,7 @@ values_int = [1, 2]
 # Enter the number of replicates desired (replicate_number). 
 # replicate_number = [0, 1, 2, 3, 4]
 replicate_number = [0, 1]
+
 
 
 # *******************************************
@@ -47,3 +50,35 @@ for sp in all_statepoints:
     pr.open_job(
         statepoint=sp,
     ).init()
+
+# Delete any analysis files that require analysis
+# outside a single workspace file and reset row, 
+# as row does not dynamically recheck for completion 
+# status after the task is completed.  
+# If any previous replicate averages and std_devs exist delete them, 
+ # because they will need recalculated as more state points were added.
+
+main_analysis_dir_path_and_name = "analysis"
+try:
+    if os.path.isdir(f'{main_analysis_dir_path_and_name}'):
+        shutil.rmtree(f'{main_analysis_dir_path_and_name}')
+except:
+    print(
+        f"No directory named "
+        f"'{main_analysis_dir_path_and_name}' exists."
+        )
+
+# The 'avg_std_dev_calculated.txt' file are auto-deleted when 
+# the 'init.py' file is run.  So if there are errors with this, 
+# you can run 'python init.py' and it will reset it, so you can 
+# rerun it. 
+# This also resets and recalculated the completion status.
+try:
+    os.system("rm workspace/*/avg_std_dev_calculated.txt")
+    os.system("row clean --completed && row scan")
+except:
+    print(
+        f"ERROR:  "
+
+        f"'{main_analysis_dir_path_and_name}' exists."
+        ) 

@@ -1,6 +1,6 @@
 """Setup the HPC and custom template location"""
 # hpc_setup.py
-
+'''
 from flow.environment import DefaultSlurmEnvironment
 
 class Phoenix(DefaultSlurmEnvironment):  
@@ -10,3 +10,4 @@ class Phoenix(DefaultSlurmEnvironment):
     # In this case 'hostname' produced 'login-phoenix-rh9--2.pace.gatech.edu'.
     hostname_pattern = r"login-phoenix-rh9-.\.pace\.gatech\.edu"
     template = "phoenix.sh"
+'''

@@ -1,0 +1,35 @@
+[workspace]
+value_file = "signac_statepoint.json"
+
+[default.action]
+command = "python actions.py --action $ACTION_NAME {directories}"
+
+[[action]]
+name = "part_1_initial_parameters_command"
+products = ["signac_job_document.json"]
+[action.group]
+maximum_size = 1
+
+
+[[action]]
+name = "part_2_write_numpy_input_command"
+products = ["numpy_input_file.txt"]
+previous_actions = ["part_1_initial_parameters_command"]
+[action.group]
+maximum_size = 1
+
+[[action]]
+name = "part_3_numpy_calcs_command"
+products = ["numpy_output_file.txt"]
+previous_actions = ["part_2_write_numpy_input_command"]
+[action.group]
+maximum_size = 1
+
+[[action]]
+name = "part_4_analysis_replicate_averages_command"
+products = ["avg_std_dev_calculated.txt"]
+previous_actions = ["part_3_numpy_calcs_command"]
+[action.group]
+submit_whole = true
+sort_by = ["/value_0_int"]
+split_by_sort_key = true
