@@ -325,7 +325,6 @@ if __name__ == '__main__':
 
     # Call the action
     globals()[args.action](*jobs)
-    #globals()[args.action]()
 # ******************************************************
 # ROW'S ENDING CODE SECTION (END)
 # ******************************************************
