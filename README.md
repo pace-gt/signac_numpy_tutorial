@@ -1,4 +1,4 @@
-## Signac Workflow Tutorial: Basic Numpy Calculations
+## Signac and Row Workflow Tutorial: Basic Numpy Calculations
 ----------------------------------------------------
 
 ### General Notes
