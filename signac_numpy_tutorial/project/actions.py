@@ -1,5 +1,5 @@
-"""Basic example of a signac project"""
-# project.py
+"""Basic example of a signac project using row for job submissions."""
+# actions.py
 
 import argparse
 import os
@@ -8,11 +8,8 @@ import warnings
 import signac
 import shutil
 
-import hpc_setup
-
-
 # ******************************************************
-# TYPICAL USER VARIBLES THAT CHANGE (START)
+# NOTES (START)
 # ******************************************************
 
 # Set the walltime, memory, and number of CPUs and GPUs needed
@@ -20,57 +17,16 @@ import hpc_setup
 # *******************************************************
 # *******************   WARNING   ***********************
 # It is recommended to check all HPC submisstions with the
-# '--pretend' command so you do not make an errors requesting 
-# the CPUs, GPUs, and other parameters by its value 
-# that many cause more resources to be used than expected,
-# which may result in higher HPC or cloud computing costs! 
+# '--dry-run' (i.e., 'row submit --dry-run') command so you 
+# do not make an errors requesting the CPUs, GPUs, and 
+# other parameters by its value that many cause more 
+# resources to be used than expected, which may result in 
+# higher HPC or cloud computing costs! 
 # *******************   WARNING   ***********************
 # *******************************************************
 
-# *******************************************************
-# *******************   Notes   ************************* 
-# The following input parameters are all entered as if 
-# you were doing a single job when submitting a single 
-# schedular script, or running it as single job locally:
-# - part_1_ntasks_int = integer
-# - part_1_cpus_per_task_int = integer
-# - part_1_gpus_per_task_int = integer
-# - part_1_mem_per_cpu_gb  = integer or float
-# - part_1_walltime_hr = integer or float
-# *******************   Notes   ************************* 
-# *******************************************************
-
-part_1_ntask_int = 1
-part_1_cpus_per_task_int = 2
-part_1_gpus_per_task_int = 1
-part_1_mem_per_cpu_gb = 4
-part_1_walltime_hr = 0.25
-
-part_2_ntask_int = 1
-part_2_cpus_per_task_int = 1
-part_2_gpus_per_task_int = 0
-part_2_mem_per_cpu_gb = 4
-part_2_walltime_hr = 0.5
-
-part_3_ntask_int = 1
-part_3_cpus_per_task_int = 1
-part_3_gpus_per_task_int = 1
-part_3_mem_per_cpu_gb = 4
-part_3_walltime_hr = 0.75
-
-part_4_ntask_int = 1
-part_4_cpus_per_task_int = 1
-part_4_gpus_per_task_int = 0
-part_4_mem_per_cpu_gb = 4
-part_4_walltime_hr = 1
-
 # ******************************************************
-# TYPICAL USER VARIBLES THAT CHANGE (END)
-# ******************************************************
-
-
-# ******************************************************
-# SIGNAC MAIN CODE SECTION (START)
+# NOTES (END)
 # ******************************************************
 
 # ******************************************************
@@ -86,7 +42,7 @@ output_avg_std_of_replicates_txt_filename = "output_avg_std_of_replicates_txt_fi
 # ******************************************************
 # NON-CHANGEABLE VARIABLES 
 # NOTE: CAN CHANGE IF MANUALLY CHANGING THE
-# 'workflow.toml' ALSO (ENT)
+# 'workflow.toml' ALSO (END)
 # ******************************************************
 
 # SET THE PROJECTS DEFAULT DIRECTORY
@@ -251,9 +207,9 @@ def part_3_numpy_calcs_command(*jobs):
 # PERFORM THE NUMPY CALCULATIONS (END)
 # ******************************************************
 
-# ******************************************************
+# ***************************************************************
 # DATA ANALSYIS: GET THE REPLICATE DATA AVG AND STD. DEV (START)
-# ******************************************************
+# ***************************************************************
 
 def part_4_analysis_replicate_averages_command(*jobs):
     # Get the individial averages of the values from each state point,
@@ -339,9 +295,8 @@ def part_4_analysis_replicate_averages_command(*jobs):
     # Write the completion files for all the individual state spaces
     # where the averaging and standard deviations were calculated
     # The 'avg_std_dev_calculated.txt' file are auto-deleted when 
-    # the 'init.py' file is run.  So if there are errors with this, 
-    # you can run 'python init.py' and it will reset it, so you can 
-    # rerun it. 
+    # the 'init.py' file is run.  So if there are errors with this, you 
+    # can run 'python init.py' and it will reset it, so you can rerun it. 
     # The 'avg_std_dev_calculated.txt' file needs to be the 'product'
     # for the workflow.toml file.
     for job in jobs:
@@ -350,9 +305,9 @@ def part_4_analysis_replicate_averages_command(*jobs):
         ouput_file = open(job.fn(ouput_filename), "w")
         ouput_file.close()
 
-# ******************************************************
+# ***************************************************************
 # # DATA ANALSYIS: GET THE REPLICATE DATA AVG AND STD. DEV (END)
-# ******************************************************
+# ***************************************************************
 
 # ******************************************************
 # ROW'S ENDING CODE SECTION (START)

@@ -2,7 +2,7 @@
 --------------------
 
 ### Overview
-All the `signac` commands are run from the `<local_path>/signac_numpy_tutorial/signac_numpy_tutorial/project` directory, which include, but are not limited to the following commands:
+All the `signac` and `row` commands are run from the `<local_path>/signac_numpy_tutorial/signac_numpy_tutorial/project` directory, which include, but are not limited to the following commands:
 
 This can be done at the start of a new project, but is not always required. If you moved the directory after starting a project or signac can not find the path correctly, you will need to run the following command (`signac init`) from the `project` directory:
 
@@ -11,45 +11,119 @@ signac init
 ```
 
  - State point initialization.
-```bash
-python init.py
-```
+    ```bash
+    python init.py
+    ```
  - Checking the project status.
+    ```bash
+    row show status
+    ```
+ - Running the project's selected part locally (general example only).  See the `row show status` output for the part names.
+
+    **Run the following command and review the output to make sure it is submitting the correct slurm scripts:**:**
+    ```bash
+    row submit --dry-run
+    ```
+
+  - Submitting the project's selected part to the HPC (general example only).  See the `python project.py status` output for the part names.
+
+    **Run the following command and review the output to make sure it is submitting the correct slurm scripts:**:**
+    ```bash
+    row submit --dry-run
+    ```
+
+    **Run the following command:**
+    ```bash
+    row submit --action <part_x_this_does_a_function_y>
+    ```
+
+Some documention references:
+
+- See the [sigac documenation](https://docs.signac.io/) for more information, features, and the how to populate the workspace with the init.py file.
+- See the [row documenation](https://row.readthedocs.io/) for information on setting up and executing the workflows and job submissions. 
+
+NOTES:
+- `Row`status tracking is done only by looking for specific files located in the `workspace/*/` directories (i.e., for each state point).
+
+- When using the `row submit` command, you can run the following some flags to control the how the jobs are submitted to the HPC. 
+
+- `Warning`, the user should always confirm the job submission to the HPC is working properly before submitting jobs using the `--dry-run` flag.  This may involve programming the correct items in the custom HPC submission script (i.e., the `workflow.toml` file) as needed to make it work for their unique setup. 
+
+
+### HPC setup file
+------------------
+The `clusters.toml` file is used to specify the the HPC environment.  The specific HPC will need to be setup for each HPC and identified on the `workflow.toml` file.    
+
+- **Add the cluster configuration file (`clusters.toml`) to the following location on the HPC under your account (`~/.config/row/clusters.toml`).**
+- Modify the `clusters.toml` file to fit your HPC (Example: Replace the <ADD_YOUR_HPC_NAME_STRING> values with your custom values.)
+- Modify the `workflow.toml` file to fit your HPC (Example: Replace the <ADD_YOUR_HPC_NAME> and <ADD_YOUR_CHARGE_ACCOUNT_NAME> values with your custom values.)
+- Modify the `workflow.toml`file to your partitions 
+
 ```bash
-python project.py status
+custom = ["","--partition='cpu-1, cpu-1, cpu-3'"]
 ```
- - Running the project's selected part locally (general example only).
+
+The cluster partitions can be ones that are made up, to select the proper memory per CPU or CPU, and the real paritions can be specificed in the `workflow.toml` file, under the `custom` section (see below and in the `workflow.toml` file).  
+- Note: The `clusters.toml` file currently sets the memory based only on the partitions.  
+- This can also be done if >1 or more partitions is needed.
+
 ```bash
-python project.py run -o <part_x_this_does_a_function_y>
+...
+[action.submit_options.<HPC_NAME>]
+account = "<YOUR_CHARGE_ACCOUNT_NAME>"
+setup = """
+module load mamba
+mamba activate signac_numpy_tutorial
+"""
+custom = ["","--partition='cpu-1, cpu-1, cpu-3'"]
+...
 ```
 
-  - Submitting the project's selected part to the HPC (general example only).
-```bash
-python project.py submit -o <part_x_this_does_a_function_y>
-```
+- Testing the setup for running only locally, not on an HPC.
 
-When using the `run` command, you can run the following flags, controlling the how the jobs are executed on the local machine (does not produce HPC job submission scripts):
- - `--parallel 2` : This only works this way when using `run`. This runs several jobs in parallel (2 in this case) at a time on the local machine.
- - See the `signac` [documenation](https://docs.signac.io/en/latest/) for more information, features, and the [Project Command Line Interface](https://docs.signac.io/projects/flow/en/latest/project-cli.html).
+    **Run the following command:**
+    ```bash
+    row submit --dry-run
+    ```
 
-When using the `submit` command, you can run the following flags, controlling the how the jobs are submitted to the HPC:
- - `--bundle 2` : Only available when using `submit`.  This bundles multiple jobs (2 in this case) into a single run or HPC submittion script, auto adjusting the time, CPU cores, etc., based on the total command selections.
-  - `--pretend` : Only available when using `submit`.  This is used to output what the submission script will look like, without submitting it to the HPC. 
-  - `--parallel` : This only works this way when using `submit`.  The `N` value in `--parallel N` is not read; therefore, it only runs all the jobs in a HPC submittion script at the same time (in parallel), auto adjusting some variables.
-  - See the `signac` [documenation](https://docs.signac.io/en/latest/) for more information, features, and the [Project Command Line Interface](https://docs.signac.io/projects/flow/en/latest/project-cli.html).
+    **You should see an output that looks something like this in the output if it is working:**
 
-`Warning`, the user should always confirm the job submission to the HPC is working properly before submitting jobs using the `--pretend` flag, especially when using `--parallel` and `--bundle`.  This may involve programming the correct items in the custom HPC submission script (i.e., the files in the `templates` folder) as needed to make it work for their unique setup. 
+    ...
 
+    directories=(
+    be31aae200171ac52a9e48260b7ba5b1
+    )
 
- ## templates directory and hpc_setup.py file
----------------------------------------------
+    export ACTION_WORKSPACE_PATH=workspace
+    export ACTION_CLUSTER=`none`
 
-### hpc_setup.py file
-This file, `hpc_setup.py`, is used to specify the the HPC environment.  The `class` will need to be setup for each HPC (changing the class name and Default environment).  The following also need changed in the `class`:
- - The `template` variable to changed to the custom HPC submission script (the `slurm` `phoenix.sh` file is used here), which is located in the `templates` directory.  
- - The `hostname_pattern` variable to changed to the custom HPC hostname. In this case 'hostname' produced 'login-phoenix-slurm-2.pace.gatech.edu'.  
+    ...
 
-### Templates directory
-This directory is used to store the custom HPC submission scripts and any template files used for the custom workflow (Example: A base template file that is used for a find and replace function, changing the variables with the differing state point inputs).  These find and replace template files could also be put in the `src` directory, but the HPC submission scripts must remain in the `templates` directory.   **All the standard or custom module load commands, conda activate commands, and any other custom items that needed to be HPC submission scripts should in included here for every project (Example: Specific queues, CPU/GPU models, etc.).** 
+    ```bash
+    row submit --action <part_x_this_does_a_function_y>
+    ```
 
-This specific `phoenix.sh` file is designed to auto-select and submit CPU or GPU Slurm scripts based on what CPUs only or GPUs the user selected for each part of the project (i.e., jobs in the project parts.)
+  - Testing the setup for running on an HPC.
+
+    **Run the following command:**
+    ```bash
+    row submit --dry-run
+    ```
+    
+    **You should see an output that looks something like this in the output if it is working:**
+
+    ...
+
+    directories=(
+    be31aae200171ac52a9e48260b7ba5b1
+    )
+
+    export ACTION_WORKSPACE_PATH=workspace
+    export ACTION_CLUSTER=`<YOUR_HPC_NAME>`
+    
+    ...
+
+    **Run the following command:**
+    ```bash
+    row submit --action <part_x_this_does_a_function_y>
+    ```

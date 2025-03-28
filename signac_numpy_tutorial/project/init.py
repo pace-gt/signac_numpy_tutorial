@@ -1,10 +1,10 @@
-"""Initialize signac statepoints."""
+"""Initialize signac statepoints to use with row for job submissions."""
+# init.py
 
 import os
 import numpy as np
 import signac
 import shutil
-import time
 
 # *******************************************
 # ENTER THE MAIN USER STATEPOINTS (START)
@@ -77,8 +77,4 @@ try:
     os.system("rm workspace/*/avg_std_dev_calculated.txt")
     os.system("row clean --completed && row scan")
 except:
-    print(
-        f"ERROR:  "
-
-        f"'{main_analysis_dir_path_and_name}' exists."
-        ) 
+    print(f"ERROR: Unable to clean and scan workspace progress.") 
