@@ -7,9 +7,9 @@ Using `signac` and `row` workflows provide the following benefits:
 
  - The `signac` and `row` workflows provide contained and totally reproducible results, since all the project steps and calculations are contained within this a single `signac` project. Although, to ensure total reproduciblity, the project should be run from a container.  Note: This involves building a container (Docker, Apptainer, Podman, etc.), using it to run the original calculations, and providing it the future parties that are trying to reproduce the exact results.
 
- - The `signac` and `row` workflows can simply track the progress of any project on locally or on the HPC, providing as much or a little details of the project status as the user programs into the `project.py` file. 
+ - The `signac` and `row` workflows can simply track the progress of any project on locally or on the HPC, providing as much or a little details of the project status as the user programs into the `actions.py` file.  Note: `row` tracks the progress and completion of a project step or section by determining if a file exists.  Therefore, the user can generate this file after a verification step is performed confirm each step or part is sucessfully completed.
 
- - These `signac` and `row` workflows are designed to track the progress of all the project's parts or stages, only resubmitting the jobs locally or to the HPC if they are not completed or not already in the queque.  
+ - These `signac` and `row` workflows are designed to track the progress of all the project's parts or stages, only resubmitting the jobs locally or to the HPC if they are not completed or not already in the queque.
  
  - These `signac` and `row` workflows also allow colleagues to quickly transfer their workflows to each other, and easily add new state points to a project, without the fear of rerunning the original state points.  
 
@@ -18,11 +18,11 @@ Using `signac` and `row` workflows provide the following benefits:
 
 ### Overview
 
-This is a `signac` and `row` workflow example/tutorial for a simple Numpy calculation, which utilizes the following workflow steps:
+This is a `signac` and `row` workflow example/tutorial for a simple `numpy` calculation, which utilizes the following workflow steps:
 
  - **Part 1:** For each individual job (set of state points), this code generates the `signac_job_document.json` file from the `signac_statepoint.json` data.  The `signac_statepoint.json` only stores the set of state points or required variables for the given job.  The `signac_job_document.json` can be used to store any other variables that the user wants to store here for later use or searching. 
 
-- **Part 2:** This writes the input values into a file that `Numpy` will use to do a calculation in `Part 3`.  There are four (4) random numbers generated that used the initial `value_0_int` value and the `replicate_number_int` value to seed the random number generator.
+- **Part 2:** This writes the input values into a file that `numpy` will use to do a calculation in `Part 3`.  There are four (4) random numbers generated that used the initial `value_0_int` value and the `replicate_number_int` value to seed the random number generator.
 
 - **Part 3:** Calulate the dot product of the four (4) random numbers generated in `Part 2` (4 numbers dot [1, 2, 3, 4]).  Also, run a bash command `echo "Running the echo command or any other bash command here"`, which is an example of how to run a bash command to run a software package inside the commands for each state point. 
 
@@ -42,18 +42,20 @@ Please cite this GitHub repository.
 
 ### Installation
 
-These signac workflows "this project" can be built using `mamba`.  Alternatively, you can suppliment `conda` for `mamba` if you are using `conda`:
+These signac workflows "this project" can be built using `miniforge`.  Alternatively, you use can use `mamba` or `micromamba`,  supplimenting `mamba` or `micromamba`, respectively for `conda` when using them.  
+
+The following steps can be used to build the environment:
 
 ```bash
 cd signac_numpy_tutorial
 ```
 
 ```bash
-mamba env create -f environment.yml
+conda env create -f environment.yml
 ```
 
 ```bash
-mamba activate signac_numpy_tutorial
+conda activate signac_numpy_tutorial
 ```
 
 ### Submit the Workflow Jobs locally or to an HPC, depending on the `workflow.toml` file setup. 

@@ -43,9 +43,9 @@ Some documention references:
 - See the [row documenation](https://row.readthedocs.io/) for information on setting up and executing the workflows and job submissions. 
 
 NOTES:
-- `Row`status tracking is done only by looking for specific files located in the `workspace/*/` directories (i.e., for each state point).
+- `Row` status tracking is done only by looking for specific files located in the `workspace/*/` directories (i.e., for each state point).
 
-- When using the `row submit` command, you can run the following some flags to control the how the jobs are submitted to the HPC. 
+- When using the `row submit` command, you can run utilize flags to control the how the jobs are submitted to the HPC. 
 
 - `Warning`, the user should always confirm the job submission to the HPC is working properly before submitting jobs using the `--dry-run` flag.  This may involve programming the correct items in the custom HPC submission script (i.e., the `workflow.toml` file) as needed to make it work for their unique setup. 
 
@@ -57,13 +57,13 @@ The `clusters.toml` file is used to specify the the HPC environment.  The specif
 - **Add the cluster configuration file (`clusters.toml`) to the following location on the HPC under your account (`~/.config/row/clusters.toml`).**
 - Modify the `clusters.toml` file to fit your HPC (Example: Replace the <ADD_YOUR_HPC_NAME_STRING> values with your custom values.)
 - Modify the `workflow.toml` file to fit your HPC (Example: Replace the <ADD_YOUR_HPC_NAME> and <ADD_YOUR_CHARGE_ACCOUNT_NAME> values with your custom values.)
-- Modify the `workflow.toml`file to your partitions 
+- If you need to add custom parts to the slurm submission script, or modify the `workflow.toml` file to your partitions, you can do that with the below addition to the `workflow.toml` file.
 
 ```bash
 custom = ["","--partition='cpu-1, cpu-1, cpu-3'"]
 ```
 
-The cluster partitions can be ones that are made up, to select the proper memory per CPU or CPU, and the real paritions can be specificed in the `workflow.toml` file, under the `custom` section (see below and in the `workflow.toml` file).  
+If needed, the cluster partitions can be ones that are made up, to select the proper memory per CPU or GPU, and the real paritions can be specificed in the `workflow.toml` file, under the `custom` section (see below and in the `workflow.toml` file). In the near future, `row` may encorporate a feature to select the job memory at the `workflow.toml` file, but this can be a workaround until that is available, and be used as a good example without providing any HPC details.
 - Note: The `clusters.toml` file currently sets the memory based only on the partitions.  
 - This can also be done if >1 or more partitions is needed.
 
@@ -72,14 +72,14 @@ The cluster partitions can be ones that are made up, to select the proper memory
 [action.submit_options.<HPC_NAME>]
 account = "<YOUR_CHARGE_ACCOUNT_NAME>"
 setup = """
-module load mamba
-mamba activate signac_numpy_tutorial
+module load conda
+conda activate signac_numpy_tutorial
 """
 custom = ["","--partition='cpu-1, cpu-1, cpu-3'"]
 ...
 ```
 
-- Testing the setup for running only locally, not on an HPC.
+- Testing the setup for running only locally, **not on an HPC**.
 
     **Run the following command:**
     ```bash
@@ -99,11 +99,13 @@ custom = ["","--partition='cpu-1, cpu-1, cpu-3'"]
 
     ...
 
+   **Run the following part of the workflow:**
+
     ```bash
     row submit --action <part_x_this_does_a_function_y>
     ```
 
-  - Testing the setup for running on an HPC.
+  - Testing the setup for running **on an HPC**.
 
     **Run the following command:**
     ```bash
@@ -123,7 +125,7 @@ custom = ["","--partition='cpu-1, cpu-1, cpu-3'"]
     
     ...
 
-    **Run the following command:**
+    **Run the following part of the workflow:**
     ```bash
     row submit --action <part_x_this_does_a_function_y>
     ```

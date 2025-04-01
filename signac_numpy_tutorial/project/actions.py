@@ -7,6 +7,7 @@ import numpy as np
 import warnings
 import signac
 import shutil
+import subprocess
 
 # ******************************************************
 # NOTES (START)
@@ -195,13 +196,17 @@ def part_3_numpy_calcs_command(*jobs):
 
         # example of running a bash command
         print(f"Running job id {job}")
+        print(f'example bash run command = {run_command}')
+
         run_command = "echo {}".format(
             'Running the echo command or any other bash command here',
         )
-
-        print(f'example bash run command = {run_command}')
-
-        os.system(run_command)
+        exec_run_command = subprocess.Popen(
+            run_command, 
+            shell=True, 
+            stderr=subprocess.STDOUT
+        )
+        os.waitpid(exec_run_command.pid, os.WSTOPPED)
 
 # ******************************************************
 # PERFORM THE NUMPY CALCULATIONS (END)
