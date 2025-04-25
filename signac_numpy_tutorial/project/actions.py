@@ -123,8 +123,6 @@ def part_2_write_numpy_input_command(*jobs):
                 job.fn(f"{numpy_input_filename_str}.txt")
             )
 
-            
-
 # ******************************************************
 # CREATE THE NUMPY FILE TO READ OR INPUT FILE  (END)
 # ******************************************************
@@ -206,7 +204,7 @@ def part_3_numpy_calcs_command(*jobs):
             shell=True, 
             stderr=subprocess.STDOUT
         )
-        os.waitpid(exec_run_command.pid, os.WSTOPPED)
+        os.wait4(exec_run_command.pid, os.WSTOPPED)
 
 # ******************************************************
 # PERFORM THE NUMPY CALCULATIONS (END)

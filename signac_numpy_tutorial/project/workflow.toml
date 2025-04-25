@@ -16,9 +16,9 @@ maximum_size = 1
 
 [action.resources]
 processes.per_directory = 1
-gpus_per_process = 0
 threads_per_process = 1
-walltime.per_submission = "00:10:00"
+memory_per_cpu_mb = 7_100
+walltime.per_submission = "00:11:00"
 
 [action.submit_options.<ADD_YOUR_HPC_NAME>]
 account = "<ADD_YOUR_CHARGE_ACCOUNT_NAME>"
@@ -26,8 +26,13 @@ setup = """
 module load mamba
 mamba activate signac_numpy_tutorial
 """
-custom = ["","--partition='cpu-1, cpu-1, cpu-3'"]
-partition = "cpu_8GB_per_cpu_add_1+_partitions_in_custom_only"
+
+# You can also select a real partition if it is in the 'clusters.toml' file, 
+# and then you do not need to add the '--partition' info in 'custom'.
+# However, this will only select a single partition.  If you want more 
+# than 1 partition, you should do it the same way as below.
+partition = "cpu_general_not_real_partition"
+custom = ["","--partition=cpu-1,cpu-1,cpu-3", "--output=/dev/null", "--error=/dev/null"]
 
 #---------------------
 [[action]]
@@ -40,9 +45,9 @@ maximum_size = 1
 
 [action.resources]
 processes.per_directory = 1
-gpus_per_process = 0
 threads_per_process = 1
-walltime.per_submission = "00:11:00"
+memory_per_cpu_mb = 7_200
+walltime.per_submission = "00:12:00"
 
 [action.submit_options.<ADD_YOUR_HPC_NAME>]
 account = "<ADD_YOUR_CHARGE_ACCOUNT_NAME>"
@@ -50,8 +55,13 @@ setup = """
 module load mamba
 mamba activate signac_numpy_tutorial
 """
-custom = ["","--partition='cpu-1, cpu-1, cpu-3'"]
-partition = "cpu_8GB_per_cpu_add_1+_partitions_in_custom_only"
+
+# You can also select a real partition if it is in the 'clusters.toml' file, 
+# and then you do not need to add the '--partition' info in 'custom'.
+# However, this will only select a single partition.  If you want more 
+# than 1 partition, you should do it the same way as below.
+partition = "cpu_general_not_real_partition"
+custom = ["","--partition=cpu-1,cpu-1,cpu-3", "--output=/dev/null", "--error=/dev/null"]
 
 #---------------------
 [[action]]
@@ -66,7 +76,8 @@ maximum_size = 1
 processes.per_directory = 1
 gpus_per_process = 1
 threads_per_process = 1
-walltime.per_submission = "00:12:00"
+memory_per_cpu_mb = 7_300
+walltime.per_submission = "00:13:00"
 
 [action.submit_options.<ADD_YOUR_HPC_NAME>]
 account = "<ADD_YOUR_CHARGE_ACCOUNT_NAME>"
@@ -76,8 +87,13 @@ module load cuda
 module load mamba
 mamba activate signac_numpy_tutorial
 """
-custom = ["","--partition='cpu-1, cpu-1, cpu-3'"]
+
+# You can also select a real partition if it is in the 'clusters.toml' file, 
+# and then you do not need to add the '--partition' info in 'custom'.
+# However, this will only select a single partition.  If you want more 
+# than 1 partition, you should do it the same way as below.
 partition = "gpu_8GB_per_gpu_add_1+_partitions_in_custom_only"
+custom = ["","--partition=gpu-1,gpu-1,gpu-3", "--output=/dev/null", "--error=/dev/null"]
 
 #---------------------
 [[action]]
@@ -91,10 +107,10 @@ sort_by = ["/value_0_int"]
 split_by_sort_key = true
 
 [action.resources]
-processes.per_directory = 1
-gpus_per_process = 0
+processes.per_submission = 1
 threads_per_process = 1
-walltime.per_submission = "00:13:00"
+memory_per_cpu_mb = 7_400
+walltime.per_submission = "00:14:00"
 
 [action.submit_options.<ADD_YOUR_HPC_NAME>]
 account = "<ADD_YOUR_CHARGE_ACCOUNT_NAME>"
@@ -102,5 +118,10 @@ setup = """
 module load mamba
 mamba activate signac_numpy_tutorial
 """
-custom = ["","--partition='cpu-1, cpu-1, cpu-3'"]
-partition = "cpu_8GB_per_cpu_add_1+_partitions_in_custom_only"
+
+# You can also select a real partition if it is in the 'clusters.toml' file, 
+# and then you do not need to add the '--partition' info in 'custom'.
+# However, this will only select a single partition.  If you want more 
+# than 1 partition, you should do it the same way as below.
+partition = "cpu_general_not_real_partition"
+custom = ["","--partition=cpu-1,cpu-1,cpu-3", "--output=/dev/null", "--error=/dev/null"]

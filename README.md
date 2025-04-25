@@ -1,13 +1,13 @@
-## Signac and Row Workflow Tutorial: Basic Numpy Calculations
+# Signac and Row Workflow Tutorial: Basic Numpy Calculations
 ----------------------------------------------------
 
-### General Notes
+## General Notes
 
 Using `signac` and `row` workflows provide the following benefits: 
 
- - The `signac` and `row` workflows provide contained and totally reproducible results, since all the project steps and calculations are contained within this a single `signac` project. Although, to ensure total reproduciblity, the project should be run from a container.  Note: This involves building a container (Docker, Apptainer, Podman, etc.), using it to run the original calculations, and providing it the future parties that are trying to reproduce the exact results.
+ - The `signac` and `row` workflows provide contained and totally reproducible results, since all the project steps and calculations are contained within this a single `signac`/`row` project. Although, to ensure total reproduciblity, the project should be run from a container.  Note: This involves building a container (Docker, Apptainer, Podman, etc.), using it to run the original calculations, and providing it the future parties that are trying to reproduce the exact results.
 
- - The `signac` and `row` workflows can simply track the progress of any project on locally or on the HPC, providing as much or a little details of the project status as the user programs into the `actions.py` file.  Note: `row` tracks the progress and completion of a project step or section by determining if a file exists.  Therefore, the user can generate this file after a verification step is performed confirm each step or part is sucessfully completed.
+ - The `signac` and `row` workflows can simply track the progress of any project on locally or on the HPC, providing as much or a little details of the project status as the user programs into the `actions.py` file.  Note: `row` tracks the progress and completion of a project step or section by determining if a file exists.  Therefore, the user can generate this file after a verification step is performed to confirm a sucessful completion or commands run without error (Exampe: `Exit Code 0`).  
 
  - These `signac` and `row` workflows are designed to track the progress of all the project's parts or stages, only resubmitting the jobs locally or to the HPC if they are not completed or not already in the queque.
  
@@ -16,7 +16,7 @@ Using `signac` and `row` workflows provide the following benefits:
  - Please also see the [signac website](https://signac.io/) and [row website](https://row.readthedocs.io/), which outlines some of the other major features. 
 
 
-### Overview
+## Overview
 
 This is a `signac` and `row` workflow example/tutorial for a simple `numpy` calculation, which utilizes the following workflow steps:
 
@@ -28,21 +28,27 @@ This is a `signac` and `row` workflow example/tutorial for a simple `numpy` calc
 
 - **Part 4:** Obtain the average and standard deviation for each input `value_0_int` value across all the replicates, and print the output data file (`analysis/output_avg_std_of_replicates_txt_filename.txt`).  Signac is setup to automatically loop through all the json files (`signac_statepoint.json`), calculating the average and standard deviation for the jobs with the state points that only have a different `replicate_number_int` numbers. 
 
-#### Notes:
+### Notes:
 - **src directory:** This directory can be used to store any custom function that are required for this workflow.  This includes any developed `Python` functions or any template files used for the custom workflow (Example: A base template file that is used for a find and replace function, changing the variables with the differing state point inputs).
 
-### Resources
+## Resources
  - The [signac documentation](https://signac.io/), [row documenation](https://row.readthedocs.io/), [signac GitHub](https://github.com/glotzerlab/signac), and [row GitHub](https://github.com/glotzerlab/row) and can be used for reference.
 
-### Citation
+## Citation
+-----------
+Please cite this GitHub repository and the following repositories:
 
-Please cite this GitHub repository.
+ - [signac GitHub](https://github.com/glotzerlab/signac)
+ - [row GitHub](https://github.com/glotzerlab/row)
 
- - This repository:  Add repository here
+## Installation
+---------------
+These signac workflows "this project" can be built using `mamba`.  Alternatively, you use can use `micromamba` or `miniforge`,  supplimenting `micromamba` or `conda`, respectively for `mamba` when using them.  
+If you are using an HPC, you will likely need the below command or a similar command to load the correct python package manager.
 
-### Installation
-
-These signac workflows "this project" can be built using `miniforge`.  Alternatively, you use can use `mamba` or `micromamba`,  supplimenting `mamba` or `micromamba`, respectively for `conda` when using them.  
+```bash
+module load mamba
+```
 
 The following steps can be used to build the environment:
 
@@ -51,64 +57,95 @@ cd signac_numpy_tutorial
 ```
 
 ```bash
-conda env create -f environment.yml
+mamba env create -f environment.yml
 ```
 
 ```bash
-conda activate signac_numpy_tutorial
+mamba activate signac_numpy_tutorial
 ```
 
-### Submit the Workflow Jobs locally or to an HPC, depending on the `workflow.toml` file setup. 
+## HPC setup file
+-----------------
+The `clusters.toml` file is used to specify the the HPC environment.  The specific HPC will need to be setup for each HPC and identified on the `workflow.toml` file.    
 
-All commands in this section are run from the `<local_path>/signac_numpy_tutorial/signac_numpy_tutorial/project` directory.
+**Modify and add the `clusters.toml` file:**
+- **Add the cluster configuration file (`clusters.toml`) to the following location on the HPC under your account (`~/.config/row/clusters.toml`).**
+- Modify the `clusters.toml` file to fit your HPC (Example: Replace the **<ADD_YOUR_HPC_NAME_STRING>** values with your custom values.)
 
-This can be done at the start of a new project, but is not always required. If you moved the directory after starting a project or signac can not find the path correctly, you will need to run the following command (`signac init`) from the `project` directory:
+**Modify and add the `workflow.toml` file:**
+- Modify the `workflow.toml` file to fit your HPC (Example: Replace the **<ADD_YOUR_HPC_NAME>** and **<ADD_YOUR_CHARGE_ACCOUNT_NAME>** values with your custom values.)
+- Modify the slurm submission script, or modify the `workflow.toml` file to your cluster's partitions that you want to use, you can do that with the below addition to the `workflow.toml` file.
+
+For parts 1, 2, and 4:
+
+    ```bash
+    custom = ["","--partition=cpu-1,cpu-1,cpu-3"]
+    ```
+
+For part 3:
+
+    ```bash
+    custom = ["","--partition=gpu-1,gpu-1,gpu-3"]
+    ```
+
+Note: As needed, the cluster partitions in the `clusters.toml` can be fake ones.  Then specifying the fake or real partition selection in the `workflow.toml` file (i.e., `partition=fake_partition_name`), allows you just override the selected partition and allow many real partitions in the `workflow.toml` (i.e., `custom = ["","--partition=cpu-1,cpu-1,cpu-3"]`), which is used to write the `Slurm` submission script.
+- This can also be done if >1 or more partitions is needed.
+
+## Testing the setup for running only locally, **not on an HPC**.
+
+**Run the following command:**     
 
 ```bash
-signac init
+row submit --dry-run
 ```
 
-In general, check the status of the workflows buy running `row show status` and `row submit --dry-run` before each submission to ensure each workflow part is not written in a way that is computationally expensive.  
-
-Initialize all the state points for the jobs (generate all the separate folders with the same variables).  
- - Note: This command generates the `workspace` folder, which includes a sub-folder for each state point (different variable combinations),  These sub-folders are numbered uniquely based of the state point values.  The user can add more state points via the `init.py` file at any time, running the below command to create the new state points files and sub-folders that are in the `init.py` file.
-
- ```bash
-python init.py
-```
-
-Check the status of your project (i.e., what parts are completed and what parts are available to be run).
+**You should see an output that looks something like this in the output if it is working:**
 
 ```bash
-row show status
+...
+
+directories=(
+be31aae200171ac52a9e48260b7ba5b1
+)
+
+export ACTION_WORKSPACE_PATH=workspace
+export ACTION_CLUSTER=`none`
+
+...
 ```
 
-Run `all available jobs for the whole project` locally with the `submit` command.  Note: Using the run command like this will run all parts of the projects until completion.  Note: This feature is not available when submitting to HPCs.
+**Run the following part of the workflow:**
 
 ```bash
-row submit
+row submit --action <part_x_this_does_a_function_y>
 ```
 
-Run all available `part 1` sections of the project locally with the `submit` command.
+## Testing the setup for running **on an HPC**.
+
+**Run the following command:**
 
 ```bash
-row submit --action part_1_initial_parameters_command
+row submit --dry-run
 ```
-
-Run all available `part 2` sections of the project locally with the `submit` command.
+    
+**You should see an output that looks something like this in the output if it is working:**
 
 ```bash
-row submit --action part_2_write_numpy_input_command
+...
+
+directories=(
+be31aae200171ac52a9e48260b7ba5b1
+)
+
+export ACTION_WORKSPACE_PATH=workspace
+export ACTION_CLUSTER=`<YOUR_HPC_NAME>`
+
+...
 ```
 
-Run all available `part 3` sections of the project locally with the `submit` command.
+**Run the following part of the workflow:**
 
 ```bash
-row submit --action part_3_numpy_calcs_command
+row submit --action <part_x_this_does_a_function_y>
 ```
 
-Run all available `part 4` sections of the project locally with the `submit` command.
-
-```bash
-row submit --action part_4_analysis_replicate_averages_command
-```
