@@ -68,21 +68,34 @@ mamba activate signac_numpy_tutorial
 -----------------
 The `clusters.toml` file is used to specify the the HPC environment.  The specific HPC will need to be setup for each HPC and identified on the `workflow.toml` file.    
 
-**Modify and add the `clusters.toml` file:**
-- **Add the cluster configuration file (`clusters.toml`) to the following location on the HPC under your account (`~/.config/row/clusters.toml`).**
+The following files are located here:
+
+```bash
+cd <you_local_path>/signac_numpy_tutorial/signac_numpy_tutorial/project
+```
+
+### **Modify and add the `clusters.toml` file:**
+
+
 - Modify the `clusters.toml` file to fit your HPC (Example: Replace the **<ADD_YOUR_HPC_NAME_STRING>** values with your custom values.)
 
-**Modify and add the `workflow.toml` file:**
+- **Add the cluster configuration file (`clusters.toml`) to the following location on the HPC under your account (`~/.config/row/clusters.toml`).**
+
+```bash
+cp clusters.toml ~/.config/row/clusters.toml
+```
+
+### **Modify and add the `workflow.toml` file:**
 - Modify the `workflow.toml` file to fit your HPC (Example: Replace the **<ADD_YOUR_HPC_NAME>** and **<ADD_YOUR_CHARGE_ACCOUNT_NAME>** values with your custom values.)
 - Modify the slurm submission script, or modify the `workflow.toml` file to your cluster's partitions that you want to use, you can do that with the below addition to the `workflow.toml` file.
 
-For parts 1, 2, and 4:
+For parts 1, 2, and 4, add the CPU partion(s) you want to use:
 
     ```bash
     custom = ["","--partition=cpu-1,cpu-1,cpu-3"]
     ```
 
-For part 3:
+For part 3, add the GPU partion(s) you want to use:
 
     ```bash
     custom = ["","--partition=gpu-1,gpu-1,gpu-3"]
@@ -91,15 +104,21 @@ For part 3:
 Note: As needed, the cluster partitions in the `clusters.toml` can be fake ones.  Then specifying the fake or real partition selection in the `workflow.toml` file (i.e., `partition=fake_partition_name`), allows you just override the selected partition and allow many real partitions in the `workflow.toml` (i.e., `custom = ["","--partition=cpu-1,cpu-1,cpu-3"]`), which is used to write the `Slurm` submission script.
 - This can also be done if >1 or more partitions is needed.
 
-## Testing the setup for running only locally, **not on an HPC**.
+## Testing the setup for running only locally, **not on an HPC**.  However, if `row submit` is run locally like this, then you must remove the HPC parts in the `workflow.toml` file (see the notes in the `workflow.toml`).
 
-**Run the following command:**     
+**Build the test workspace:**     
+
+```bash
+python init.py
+```
+
+**Run the following command as the test all available submissions or just from a spr:**     
 
 ```bash
 row submit --dry-run
 ```
 
-**You should see an output that looks something like this in the output if it is working:**
+**You should see an output that looks something like this (<u>export ACTION_CLUSTER=\`none\`</u>) in the output if it is working:**
 
 ```bash
 ...
@@ -114,21 +133,31 @@ export ACTION_CLUSTER=`none`
 ...
 ```
 
-**Run the following part of the workflow:**
+**Clean up row and delete the test workspace:**    
 
 ```bash
-row submit --action <part_x_this_does_a_function_y>
+row clean
+```
+
+```bash
+rm -r workspace
 ```
 
 ## Testing the setup for running **on an HPC**.
 
-**Run the following command:**
+**Build the test workspace:**     
+
+```bash
+python init.py
+```
+
+**Run the following command as the test:**   
 
 ```bash
 row submit --dry-run
 ```
     
-**You should see an output that looks something like this in the output if it is working:**
+**You should see an output that looks something like this (<u>export ACTION_CLUSTER=\`<YOUR_HPC_NAME>\`</u>) in the output if it is working:**
 
 ```bash
 ...
@@ -143,9 +172,12 @@ export ACTION_CLUSTER=`<YOUR_HPC_NAME>`
 ...
 ```
 
-**Run the following part of the workflow:**
+**Clean up row and delete the test workspace:**    
 
 ```bash
-row submit --action <part_x_this_does_a_function_y>
+row clean
 ```
 
+```bash
+rm -r workspace
+```

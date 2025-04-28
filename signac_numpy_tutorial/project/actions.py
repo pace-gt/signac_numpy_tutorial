@@ -192,13 +192,14 @@ def part_3_numpy_calcs_command(*jobs):
                                 job.fn(f"{ouput_filename}")
                             )
 
-        # example of running a bash command
+        # example of running a bash command and using 'subprocess' and 'wait4' to run 
+        # the command and wait until it is completed before the python script and job completes.
         print(f"Running job id {job}")
-        print(f'example bash run command = {run_command}')
 
         run_command = "echo {}".format(
             'Running the echo command or any other bash command here',
         )
+        print(f'example bash run command = {run_command}')
         exec_run_command = subprocess.Popen(
             run_command, 
             shell=True, 

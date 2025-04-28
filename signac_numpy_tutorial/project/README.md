@@ -19,7 +19,7 @@ signac init
     row show status
     ```
 
- - Submitting and running all the project's available parts (general example only).  See the `row show status` output for the part names. This can also be uese for local project running, which all depends on the system and the `cluster.toml` that is used.
+ - Submitting and running all the project's available parts (general example only).  See the `row show status` output for the part names. Note this can be run on the HPC or locally.  However, if `row submit` is run locally like this, then you must remove the HPC parts in the `workflow.toml` file (see the notes in the `workflow.toml`).
 
     **Run the following command and test/review the output to make sure it is submitting the correct slurm scripts or local output:**
     ```bash
@@ -31,7 +31,7 @@ signac init
     row submit
     ```
 
-- Submitting all the project's available parts/sections to be run (general example only).  See the `row show status` output for the part names. This can also be uese for local project running, which all depends on the system and the `cluster.toml` that is used.
+- Submitting all the project's available parts/sections to be run (general example only).  See the `row show status` output for the part names.  However, if `row submit` is run locally like this, then you must remove the HPC parts in the `workflow.toml` file (see the notes in the `workflow.toml`).
 
     **Run the following command and review the output to make sure it is submitting the correct slurm scripts or local output:**:**
     ```bash
@@ -47,7 +47,7 @@ signac init
 
 Please also look [here](https://row.readthedocs.io/en/0.4.0/workflow/action/submit-options.html) for more details on the HPC setup.
 
-## Run this project.
+## Setup the Runs this project.
 
 All commands in this section are run from the `<local_path>/signac_numpy_tutorial/signac_numpy_tutorial/project` directory.
 
@@ -80,12 +80,17 @@ Check the status of your project (i.e., what parts are completed and what parts 
 row show status
 ```
 
-Run `all available jobs for the whole project` locally with the `submit` command.  Note: Using the run command like this will run all parts of the projects until completion.  Note: This feature is not available when submitting to HPCs.
+## Run the all available part with `row submit`
+Run `all available jobs for the whole project` locally with the `submit` command. 
+Note: This needs to be done for each part as it only submits the available parts to the scheduler.
 
 ```bash
 row submit
 ```
 
+or
+
+## Run the all available part with `row submit --action <part_x_this_does_a_function_y>`
 Run all available `part 1` sections of the project locally with the `submit` command.
 
 ```bash

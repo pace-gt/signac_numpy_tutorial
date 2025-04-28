@@ -2,7 +2,7 @@ name: signac_numpy_tutorial
 channels:
   - conda-forge
 dependencies:
-  - python=3.12
+  - python>=3.12
   - numpy
   - row
   - signac
