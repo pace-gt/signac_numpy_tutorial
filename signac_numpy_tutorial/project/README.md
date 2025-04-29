@@ -100,7 +100,7 @@ row show status
 
 ## These are two (2) different ways to submit jobs, Submitting all the available jobs or just ones from a specific part:
 
-1. ## **All Available Project Parts:**  Submit and run the all available jobs with `row submit`:
+1. ### **All Available Project Parts:**  Submit and run the all available jobs with `row submit`:
    - Run `all available jobs for the whole project` locally with the `submit` command. 
 Note: This needs to be done for each part as it only submits the available parts to the scheduler.
 
@@ -110,7 +110,7 @@ row submit
 
 or
 
-2. **Specific Project Parts:**  Submit and and run all the available jobs from specific the part with `row submit --action <part_x_this_does_a_function_y>`.
+2. ### **Specific Project Parts:**  Submit and and run all the available jobs from specific the part with `row submit --action <part_x_this_does_a_function_y>`.
  - Run all available `part 1` sections of the project locally with the `submit` command.
 
 ```bash
