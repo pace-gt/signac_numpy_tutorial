@@ -32,7 +32,7 @@ This is a `signac` and `row` workflow example/tutorial for a simple `numpy` calc
 - **`src` directory:** This directory can be used to store any custom function that are required for this workflow.  This includes any developed `Python` functions or any template files used for the custom workflow (Example: A base template file that is used for a find and replace function, changing the variables with the differing state point inputs).
 
 ## Resources
- - The [signac documentation](https://signac.io/), [row documenation](https://row.readthedocs.io/), [signac GitHub](https://github.com/glotzerlab/signac), and [row GitHub](https://github.com/glotzerlab/row) and can be used for reference.
+ - The [signac documentation](https://signac.io/), [row documentation](https://row.readthedocs.io/), [signac GitHub](https://github.com/glotzerlab/signac), and [row GitHub](https://github.com/glotzerlab/row) and can be used for reference.
 
 ## Citation
 -----------
