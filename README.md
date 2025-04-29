@@ -9,7 +9,7 @@ Using `signac` and `row` workflows provide the following benefits:
 
  - The `signac` and `row` workflows can simply track the progress of any project locally or on the HPC, providing as much or a little details of the project status as the user programs into the `actions.py` and `workflow.toml` file.  Note: `row` tracks the progress and completion of a project step or section by determining if a file exists.  Therefore, the user can generate this file after a verification step is performed to confirm a sucessful completion or commands run without error (Exampe: `Exit Code 0`).  
 
- - These `signac` and `row` workflows are designed to track the progress of all the project's parts or stages, only resubmitting the jobs locally or to the HPC if they are not completed or not already in the queque.
+ - These `signac` and `row` workflows are designed to track the progress of all the project's parts or stages, only resubmitting the jobs locally or to the HPC if they are not completed or not already in the queue.
  
  - These `signac` and `row` workflows also allow colleagues to quickly transfer their workflows to each other, and easily add new state points to a project, without the fear of rerunning the original state points.  
 
