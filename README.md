@@ -90,11 +90,11 @@ cp clusters.toml ~/.config/row/clusters.toml
 
 ### **Modify and add the `workflow.toml` file:**
 - Modify the `workflow.toml` file to fit your HPC.
-  1. Replace the **`<ADD_YOUR_HPC_NAME>`**
+  1. Replace the **`<ADD_YOUR_HPC_NAME>`** with your HPC name.
      
      For Example at GT, `<ADD_YOUR_HPC_NAME>` is replaced with `phoenix`, changing `[action.submit_options.<ADD_YOUR_HPC_NAME>]` to `[action.submit_options.phoenix]`.
      
-  2. **`<ADD_YOUR_CHARGE_ACCOUNT_NAME_STRING>`** values with your custom values.
+  2. **`<ADD_YOUR_CHARGE_ACCOUNT_NAME_STRING>`** values with your specific charge account.
     
      For Example, `<ADD_YOUR_CHARGE_ACCOUNT_NAME_STRING>` is replaced with `"project_x"`, changing `account = `<ADD_YOUR_CHARGE_ACCOUNT_NAME_STRING>``  `account = "project_x"`
      
