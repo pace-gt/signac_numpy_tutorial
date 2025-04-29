@@ -23,7 +23,7 @@ walltime.per_submission = "00:11:00"
 # ****** USED ONLY FOR SLURM SUBMISSION - REMOVE OR '#' OUT IF RUNNING LOCALLY (START) ******
 
 [action.submit_options.<ADD_YOUR_HPC_NAME>]
-account = "<ADD_YOUR_CHARGE_ACCOUNT_NAME>"
+account = <ADD_YOUR_CHARGE_ACCOUNT_NAME_STRING>
 setup = """
 module load mamba
 mamba activate signac_numpy_tutorial
@@ -57,7 +57,7 @@ walltime.per_submission = "00:12:00"
 # ****** USED ONLY FOR SLURM SUBMISSION - REMOVE OR '#' OUT IF RUNNING LOCALLY (START) ******
 
 [action.submit_options.<ADD_YOUR_HPC_NAME>]
-account = "<ADD_YOUR_CHARGE_ACCOUNT_NAME>"
+account = <ADD_YOUR_CHARGE_ACCOUNT_NAME_STRING>
 setup = """
 module load mamba
 mamba activate signac_numpy_tutorial
@@ -93,7 +93,7 @@ walltime.per_submission = "00:13:00"
 # ****** USED ONLY FOR SLURM SUBMISSION - REMOVE OR '#' OUT IF RUNNING LOCALLY (START) ******
 
 [action.submit_options.<ADD_YOUR_HPC_NAME>]
-account = "<ADD_YOUR_CHARGE_ACCOUNT_NAME>"
+account = <ADD_YOUR_CHARGE_ACCOUNT_NAME_STRING>
 setup = """
 module reset
 module load cuda
@@ -132,7 +132,7 @@ walltime.per_submission = "00:14:00"
 # ****** USED ONLY FOR SLURM SUBMISSION - REMOVE OR '#' OUT IF RUNNING LOCALLY (START) ******
 
 [action.submit_options.<ADD_YOUR_HPC_NAME>]
-account = "<ADD_YOUR_CHARGE_ACCOUNT_NAME>"
+account = <ADD_YOUR_CHARGE_ACCOUNT_NAME_STRING>
 setup = """
 module load mamba
 mamba activate signac_numpy_tutorial
