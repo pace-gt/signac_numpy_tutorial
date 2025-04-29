@@ -160,7 +160,7 @@ row submit --action part_3_numpy_calcs_command
 row submit --action part_4_analysis_replicate_averages_command
 ```
 
-## Some Documention References:
+## Documention References:
 
 - See the [sigac documenation](https://docs.signac.io/) for more information, features, and the how to populate the workspace with the init.py file.
 - See the [row documenation](https://row.readthedocs.io/) for information on setting up and executing the workflows and job submissions. 
