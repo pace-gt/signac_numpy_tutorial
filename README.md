@@ -61,6 +61,8 @@ cd signac_numpy_tutorial
 mamba env create -f environment.yml
 ```
 
+Activate the environment:
+
 ```bash
 mamba activate signac_numpy_tutorial
 ```
