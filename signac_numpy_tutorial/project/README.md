@@ -100,8 +100,8 @@ row show status
 
 ## These are two (2) different ways to submit jobs, Submitting all the available jobs or just ones from a specific part:
 
-1. ## **All Available Project Parts:**  Submit and run the all available jobs with `row submit`: 
-Run `all available jobs for the whole project` locally with the `submit` command. 
+1. ## **All Available Project Parts:**  Submit and run the all available jobs with `row submit`:
+   - Run `all available jobs for the whole project` locally with the `submit` command. 
 Note: This needs to be done for each part as it only submits the available parts to the scheduler.
 
 ```bash
@@ -110,32 +110,32 @@ row submit
 
 or
 
-1. ## **Specific Project Parts:**  Submit and and run all the available jobs from specific the part with `row submit --action <part_x_this_does_a_function_y>`.
-Run all available `part 1` sections of the project locally with the `submit` command.
+2. **Specific Project Parts:**  Submit and and run all the available jobs from specific the part with `row submit --action <part_x_this_does_a_function_y>`.
+ - Run all available `part 1` sections of the project locally with the `submit` command.
 
 ```bash
 row submit --action part_1_initial_parameters_command
 ```
 
-Run all available `part 2` sections of the project locally with the `submit` command.
+ - Run all available `part 2` sections of the project locally with the `submit` command.
 
 ```bash
 row submit --action part_2_write_numpy_input_command
 ```
 
-Run all available `part 3` sections of the project locally with the `submit` command.
+ - Run all available `part 3` sections of the project locally with the `submit` command.
 
 ```bash
 row submit --action part_3_numpy_calcs_command
 ```
 
-Run all available `part 4` sections of the project locally with the `submit` command.
+ - Run all available `part 4` sections of the project locally with the `submit` command.
 
 ```bash
 row submit --action part_4_analysis_replicate_averages_command
 ```
 
-Some documention references:
+## Some Documention References:
 
 - See the [sigac documenation](https://docs.signac.io/) for more information, features, and the how to populate the workspace with the init.py file.
 - See the [row documenation](https://row.readthedocs.io/) for information on setting up and executing the workflows and job submissions. 
