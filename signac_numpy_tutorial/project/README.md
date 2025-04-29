@@ -165,7 +165,7 @@ row submit --action part_4_analysis_replicate_averages_command
 - See the [sigac documenation](https://docs.signac.io/) for more information, features, and the how to populate the workspace with the init.py file.
 - See the [row documenation](https://row.readthedocs.io/) for information on setting up and executing the workflows and job submissions. 
 
-NOTES:
+## IMPORTANT NOTES:
 - `Row` status tracking is done only by looking for specific files located in the `workspace/*/` directories (i.e., for each state point).
 
 - When using the `row submit` command, you can run utilize flags to control the how the jobs are submitted. 
