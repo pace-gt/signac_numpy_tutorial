@@ -61,7 +61,7 @@ signac init
     row submit --action <part_x_this_does_a_function_y>
     ```
 
-### Submit the workflow jobs locally or to an HPC, depending on the `workflow.toml` file setup. 
+## Submit the workflow jobs locally or to an HPC, depending on the `workflow.toml` file setup. 
 
 Please also look [here](https://row.readthedocs.io/en/0.4.0/workflow/action/submit-options.html) for more details on the HPC setup.
 
