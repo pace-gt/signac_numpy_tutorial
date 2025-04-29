@@ -86,7 +86,7 @@ row submit --dry-run
 ```
 
 Initialize all the state points for the jobs (generate all the separate folders and state points).  
- - Note: This command generates the `workspace` folder, which includes a sub-folder for each state point (different variable combinations),  These sub-folders are numbered uniquely based of the state point values.  The user can add more state points via the `init.py` file at any time, running the below command to create the new state points files and sub-folders that are in the `init.py` file.
+ - Note: This command generates the `workspace` folder, which includes a sub-folder for each state point (different variable or replicate combinations),  These sub-folders are numbered uniquely based of the state point values.  The user can add more state points via the `init.py` file at any time, running the below command to create the new state points files and sub-folders that are in the `init.py` file.
 
  ```bash
 python init.py
