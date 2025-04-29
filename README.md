@@ -174,7 +174,7 @@ python init.py
 row submit --dry-run
 ```
     
-**You should see an output that looks something like this (<u>export ACTION_CLUSTER=\`<YOUR_HPC_NAME>\`</u>) in the output if it is working:**
+**You should see an output that looks something like this (<u>export ACTION_CLUSTER=`<YOUR_HPC_NAME>`</u>) in the output if it is working:**
 
 ```bash
 ...
