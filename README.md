@@ -44,6 +44,7 @@ Please cite this GitHub repository and the following repositories:
 ## Installation
 ---------------
 The signac workflows for "this project" can be built using `mamba`.  Alternatively, you use can use `micromamba` or `miniforge`,  supplimenting `micromamba` or `conda`, respectively for `mamba` when using them.  
+
 If you are using an HPC, you will likely need the below command or a similar command to load the correct python package manager.
 
 ```bash
