@@ -65,7 +65,7 @@ signac init
 
 Please also look [here](https://row.readthedocs.io/en/0.4.0/workflow/action/submit-options.html) for more details on the HPC setup.
 
-## Setup the Runs this project.
+## Setup the Run this project.
 
 All commands in this section are run from the `<local_path>/signac_numpy_tutorial/signac_numpy_tutorial/project` directory.
 
