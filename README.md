@@ -184,7 +184,7 @@ be31aae200171ac52a9e48260b7ba5b1
 )
 
 export ACTION_WORKSPACE_PATH=workspace
-export ACTION_CLUSTER=`<YOUR_HPC_NAME>`
+export ACTION_CLUSTER=<YOUR_HPC_NAME>
 
 ...
 ```
