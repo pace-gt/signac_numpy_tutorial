@@ -98,7 +98,7 @@ Check the status of your project (i.e., what parts are completed and what parts 
 row show status
 ```
 
-## These are two (2) different ways to submit jobs, Submitting all the available jobs or just ones from a specific part:
+## These are two (2) different ways to submit jobs (see below):
 
 1. ### **All Available Project Parts:**  Submit and run the all available jobs with `row submit`:
    - Run `all available jobs for the whole project` locally with the `submit` command. 
