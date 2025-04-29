@@ -18,7 +18,7 @@ Activate the environment:
 mamba activate signac_numpy_tutorial
 ```
 
-The `signac init` command can be done at the start of a new project, but is not always required. If you moved the directory after starting a project or signac can not find the path correctly, you will need to run the following command (`signac init`) from the `project` directory:
+The `signac init` command can be done at the start of a new project, but is not always required. If you moved the directory after starting a project or signac can not find the path correctly, you may need to run the following command (`signac init`) from the `project` directory:
 
 ```bash
 signac init
