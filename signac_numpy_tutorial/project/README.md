@@ -108,8 +108,6 @@ Note: This needs to be done for each part as it only submits the available parts
 row submit
 ```
 
-or
-
 2. ### **Specific Project Parts:**  Submit and and run all the available jobs from specific the part with `row submit --action <part_x_this_does_a_function_y>`.
  - Run all available `part 1` sections of the project locally with the `submit` command.
 
