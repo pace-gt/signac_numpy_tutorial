@@ -170,6 +170,6 @@ row submit --action part_4_analysis_replicate_averages_command
 
 - When using the `row submit` command, you can run utilize flags to control the how the jobs are submitted. 
 
-- `Warning`, the user should always confirm the job submission to the HPC is working properly before submitting jobs using the `--dry-run` flag.  This may involve programming the correct items in the custom submission script (i.e., the `workflow.toml` file) as needed to make it work for their unique setup. 
+- `Warning`, the user should always confirm the job submission to the HPC is working properly before submitting jobs using the `--dry-run` flag.  This may involve programming the correct items in the custom submission script or the python execution file (i.e., the `workflow.toml` or `actions.py` file) as needed to make it work for their unique setup. 
 
 
