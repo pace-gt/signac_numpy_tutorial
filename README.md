@@ -78,7 +78,9 @@ cd <you_local_path>/signac_numpy_tutorial/signac_numpy_tutorial/project
 ### **Modify and add the `clusters.toml` file:**
 
 
-- Modify the `clusters.toml` file to fit your HPC. This means replacing the **`<ADD_YOUR_HPC_NAME_STRING>`** values with your custom values. For Example at GT, `<ADD_YOUR_HPC_NAME_STRING>` is replaced with `"phoenix"`.  You also may need to change the `"LMOD_SYSHOST"` environment variable to match how your specific HPC is setup. 
+- Modify the `clusters.toml` file to fit your HPC.
+  1. This means replacing the **`<ADD_YOUR_HPC_NAME_STRING>`** values with your custom values. For Example at GT, `<ADD_YOUR_HPC_NAME_STRING>` is replaced with `"phoenix"`.
+  2. You also may need to change the `"LMOD_SYSHOST"` environment variable to match how your specific HPC is setup. 
 
 - **Add the modified cluster configuration file (`clusters.toml`) to the following location on the HPC under your account (`~/.config/row/clusters.toml`).**
 
@@ -87,7 +89,10 @@ cp clusters.toml ~/.config/row/clusters.toml
 ```
 
 ### **Modify and add the `workflow.toml` file:**
-- Modify the `workflow.toml` file to fit your HPC (Example: Replace the **`<ADD_YOUR_HPC_NAME>`** and **`<ADD_YOUR_CHARGE_ACCOUNT_NAME>`** values with your custom values.)
+- Modify the `workflow.toml` file to fit your HPC.
+  1. Replace the **`<ADD_YOUR_HPC_NAME>`**
+  2. **`<ADD_YOUR_CHARGE_ACCOUNT_NAME>`** values with your custom values.
+     
 - Modify the slurm submission script, or modify the `workflow.toml` file to your cluster's partitions that you want to use, you can do that with the below addition to the `workflow.toml` file.
 
 For parts 1, 2, and 4, add the CPU partion(s) you want to use:
