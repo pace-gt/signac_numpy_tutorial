@@ -24,7 +24,7 @@ This is a `signac` and `row` workflow example/tutorial for a simple `numpy` calc
 
 - **Part 2:** This writes the input values into a file that `numpy` will use to do a calculation in `Part 3`.  There are four (4) random numbers generated that used the initial `value_0_int` value and the `replicate_number_int` value to seed the random number generator.
 
-- **Part 3:** Calulate the dot product of the four (4) random numbers generated in `Part 2` (4 numbers dot [1, 2, 3, 4]).  Also, run a bash command `echo "Running the echo command or any other bash command here"`, which is an example of how to run a bash command to run a software package inside the commands for each state point. 
+- **Part 3:** Calulates the dot product of the four (4) random numbers generated in `Part 2` (4 numbers dot [1, 2, 3, 4]).  Also, runs a bash command `echo "Running the echo command or any other bash command here"`, which is an example of how to run a bash command to run a software package inside the commands for each state point. 
 
 - **Part 4:** Obtain the average and standard deviation for each input `value_0_int` value across all the replicates, and print the output data file (`analysis/output_avg_std_of_replicates_txt_filename.txt`).  Signac is setup to automatically loop through all the json files (`signac_statepoint.json`), calculating the average and standard deviation for the jobs with the state points that only have a different `replicate_number_int` numbers. 
 
