@@ -33,7 +33,7 @@ signac init
     row show status
     ```
 
- - Submitting and running all the project's available parts.
+ - Submitting and running all the available jobs from <u>all the parts<\u>.
    1. See the `row show status` output for the part names.
    2. Note: This can be run on the HPC or locally.  However, if `row submit` is run locally like this, then you must remove the HPC parts in the `workflow.toml` file (see the notes in the `workflow.toml`).
 
@@ -47,7 +47,7 @@ signac init
     row submit
     ```
 
-- Submitting all the project's available parts/sections to be run.
+- Submitting and running all the available jobs on <u>specific parts<\u>.
   1. See the `row show status` output for the part names.
   2. Note: This can be run on the HPC or locally.  However, if `row submit` is run locally like this, then you must remove the HPC parts in the `workflow.toml` file (see the notes in the `workflow.toml`).
 
