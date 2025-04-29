@@ -65,8 +65,8 @@ mamba env create -f environment.yml
 mamba activate signac_numpy_tutorial
 ```
 
-## HPC setup file
------------------
+## HPC setup
+------------
 The `clusters.toml` file is used to specify the the HPC environment.  The specific HPC will need to be setup for each HPC and identified on the `workflow.toml` file.    
 
 The following files are located here:
@@ -119,6 +119,49 @@ Note: The cluster partitions in the `clusters.toml` can be specified for each HP
 
 Note: As needed, the cluster partitions in the `clusters.toml` can be fake ones.  Then specifying a fake partition in the `workflow.toml` file (i.e., `partition=fake_partition_name`), allows you just override the selected partition and allow many real partitions in the `workflow.toml` (i.e., `custom = ["","--partition=cpu-1,cpu-1,cpu-3"]`), which is used to write the `Slurm` submission script.
 - This can also be done if >1 or more partitions is needed.
+
+## Testing the setup for running **on an HPC**.
+
+**Build the test workspace:**     
+
+```bash
+python init.py
+```
+
+**Run the following command as the test:**   
+
+```bash
+row submit --dry-run
+```
+    
+**You should see an output that looks something like this (<u>export ACTION_CLUSTER=`<YOUR_HPC_NAME>`</u>) in the output if it is working:**
+
+```bash
+...
+
+directories=(
+be31aae200171ac52a9e48260b7ba5b1
+)
+
+export ACTION_WORKSPACE_PATH=workspace
+export ACTION_CLUSTER=<YOUR_HPC_NAME>
+
+...
+```
+
+**Clean up row and delete the test workspace:**    
+
+```bash
+row clean
+```
+
+```bash
+rm -r workspace
+```
+
+
+## Local Setup
+--------------
 
 ## Testing the setup for running only locally, **not on an HPC**.  
 - If `row submit` is run locally like this, then you must remove the HPC parts in the `workflow.toml` file (see the notes in the `workflow.toml`).
