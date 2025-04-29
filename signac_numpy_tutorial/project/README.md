@@ -4,6 +4,18 @@
 ## Overview
 All the `signac` and `row` commands are run from the `<local_path>/signac_numpy_tutorial/signac_numpy_tutorial/project` directory, which include, but are not limited to the following commands:
 
+If you are using an HPC, you will likely need the below command or a similar command to load the correct python package manager.
+
+```bash
+module load mamba
+```
+
+Activate the environment:
+
+```bash
+mamba activate signac_numpy_tutorial
+```
+
 The `signac init` command can be done at the start of a new project, but is not always required. If you moved the directory after starting a project or signac can not find the path correctly, you will need to run the following command (`signac init`) from the `project` directory:
 
 ```bash
