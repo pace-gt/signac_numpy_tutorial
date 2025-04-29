@@ -104,9 +104,18 @@ row show status
    - Run `all available jobs for the whole project` locally with the `submit` command. 
 Note: This needs to be done for each part as it only submits the available parts to the scheduler.
 
-```bash
-row submit
-```
+ ```bash
+ row submit
+ ```
+
+- Checking the project status.
+  
+ ```bash
+ row show status
+ ```
+
+- When the new jobs are ready, repeat this cycle until all jobs and the project is completed.
+  
 
 2. ### **Specific Project Parts:**  Submit and and run all the available jobs from specific the part with `row submit --action <part_x_this_does_a_function_y>`.
  - Run all available `part 1` sections of the project locally with the `submit` command.
@@ -115,17 +124,35 @@ row submit
 row submit --action part_1_initial_parameters_command
 ```
 
+ - Checking the project status via the belw and move forward when the next part is ready to be submitted..
+  
+ ```bash
+ row show status
+ ```
+
  - Run all available `part 2` sections of the project locally with the `submit` command.
 
 ```bash
 row submit --action part_2_write_numpy_input_command
 ```
 
+ - Checking the project status via the belw and move forward when the next part is ready to be submitted..
+  
+ ```bash
+ row show status
+ ```
+
  - Run all available `part 3` sections of the project locally with the `submit` command.
 
 ```bash
 row submit --action part_3_numpy_calcs_command
 ```
+
+ - Checking the project status via the belw and move forward when the next part is ready to be submitted..
+  
+ ```bash
+ row show status
+ ```
 
  - Run all available `part 4` sections of the project locally with the `submit` command.
 
