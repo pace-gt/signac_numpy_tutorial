@@ -115,7 +115,7 @@ For part 3, add the GPU partion(s) you want to use:
     custom = ["","--partition=gpu-1,gpu-1,gpu-3"]
     ```
 
-Note: The cluster partitions in the `clusters.toml` can be specified for each HPC or only the partitions that you commonly use.  This allows you to specify the partition in the `workflow.toml` file (i.e., `partition=real_partition_name`), and does not need the partitions to be specificed/overwritten in the `custom` line (i.e, custom = `["","--partition=cpu-1,cpu-1,cpu-3"]`.
+Note: The cluster partitions in the `clusters.toml` can be specified for each HPC or only the partitions that you commonly use.  This allows you to specify the partition in the `workflow.toml` file (i.e., `partition=real_partition_name`), and does not need the partitions to be specified/overwritten in the `custom` line (i.e, custom = `["","--partition=cpu-1,cpu-1,cpu-3"]`.
 
 Note: As needed, the cluster partitions in the `clusters.toml` can be fake ones.  Then specifying a fake partition in the `workflow.toml` file (i.e., `partition=fake_partition_name`), allows you just override the selected partition and allow many real partitions in the `workflow.toml` (i.e., `custom = ["","--partition=cpu-1,cpu-1,cpu-3"]`), which is used to write the `Slurm` submission script.
 - This can also be done if >1 or more partitions is needed.
