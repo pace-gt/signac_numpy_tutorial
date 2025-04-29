@@ -90,8 +90,8 @@ cp clusters.toml ~/.config/row/clusters.toml
 
 ### **Modify and add the `workflow.toml` file:**
 - Modify the `workflow.toml` file to fit your HPC.
-  1. Replace the **`<ADD_YOUR_HPC_NAME>`**  For Example at GT, `<ADD_YOUR_HPC_NAME_STRING>` is replaced with `phoenix`, yeilding `[action.submit_options.phoenix]`.
-  2. **`<ADD_YOUR_CHARGE_ACCOUNT_NAME>`** values with your custom values. For Example, `account = "project_x"`
+  1. Replace the **`<ADD_YOUR_HPC_NAME>`**  For Example at GT, `<ADD_YOUR_HPC_NAME>` is replaced with `phoenix`, changing `[action.submit_options.<ADD_YOUR_HPC_NAME>]` to `[action.submit_options.phoenix]`.
+  2. **`<ADD_YOUR_CHARGE_ACCOUNT_NAME_STRING>`** values with your custom values. For Example, `<ADD_YOUR_CHARGE_ACCOUNT_NAME_STRING>` is replaced with `"project_x"`, changing `account = `<ADD_YOUR_CHARGE_ACCOUNT_NAME_STRING>``  `account = "project_x"`
      
 - Modify the slurm submission script, or modify the `workflow.toml` file to your cluster's partitions that you want to use, you can do that with the below addition to the `workflow.toml` file.
 
