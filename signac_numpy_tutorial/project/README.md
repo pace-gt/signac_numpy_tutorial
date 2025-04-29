@@ -33,7 +33,7 @@ signac init
     row show status
     ```
 
- - Submitting and running all the available jobs from <u>all the parts</u>.
+ - **All Available Project Parts:**  Submit and run all the available jobs from all the parts.
    1. See the `row show status` output for the part names.
    2. Note: This can be run on the HPC or locally.  However, if `row submit` is run locally like this, then you must remove the HPC parts in the `workflow.toml` file (see the notes in the `workflow.toml`).
 
@@ -47,7 +47,7 @@ signac init
     row submit
     ```
 
-- Submitting and running all the available jobs on <u>specific parts</u>.
+- **Specific Project Parts:**  Submit and and run all the available jobs from specific the parts.
   1. See the `row show status` output for the part names.
   2. Note: This can be run on the HPC or locally.  However, if `row submit` is run locally like this, then you must remove the HPC parts in the `workflow.toml` file (see the notes in the `workflow.toml`).
 
@@ -56,7 +56,7 @@ signac init
     row submit --action <part_x_this_does_a_function_y> --dry-run
     ```
 
-    **Run the following command to submit or execute all the available jobs for that part or section:**
+    **Run the following command to submit or execute all the available jobs for that part:**
     ```bash
     row submit --action <part_x_this_does_a_function_y>
     ```
@@ -98,7 +98,7 @@ Check the status of your project (i.e., what parts are completed and what parts 
 row show status
 ```
 
-## Run the all available part with `row submit`
+## **All Available Project Parts:**  Submit and run the all available jobs with `row submit`: 
 Run `all available jobs for the whole project` locally with the `submit` command. 
 Note: This needs to be done for each part as it only submits the available parts to the scheduler.
 
@@ -108,7 +108,7 @@ row submit
 
 or
 
-## Run the all available part with `row submit --action <part_x_this_does_a_function_y>`
+## **Specific Project Parts:**  Submit and and run all the available jobs from specific the part with `row submit --action <part_x_this_does_a_function_y>`.
 Run all available `part 1` sections of the project locally with the `submit` command.
 
 ```bash
