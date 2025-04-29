@@ -67,6 +67,8 @@ mamba activate signac_numpy_tutorial
 
 ## HPC setup
 ------------
+- All the signac and row commands are run from the `<local_path>/signac_numpy_tutorial/signac_numpy_tutorial/project directory`.
+
 The `clusters.toml` file is used to specify the the HPC environment.  The specific HPC will need to be setup for each HPC and identified on the `workflow.toml` file.    
 
 The following files are located here:
