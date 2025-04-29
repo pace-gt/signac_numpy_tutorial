@@ -80,7 +80,7 @@ cd <you_local_path>/signac_numpy_tutorial/signac_numpy_tutorial/project
 
 - Modify the `clusters.toml` file to fit your HPC. This means replacing the **`<ADD_YOUR_HPC_NAME_STRING>`** values with your custom values. For Example at GT, `<ADD_YOUR_HPC_NAME_STRING>` is replaced with `"phoenix"`.
 
-- **Add the cluster configuration file (`clusters.toml`) to the following location on the HPC under your account (`~/.config/row/clusters.toml`).**
+- **Add the modified cluster configuration file (`clusters.toml`) to the following location on the HPC under your account (`~/.config/row/clusters.toml`).**
 
 ```bash
 cp clusters.toml ~/.config/row/clusters.toml
