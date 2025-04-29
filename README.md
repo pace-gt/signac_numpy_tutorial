@@ -1,5 +1,5 @@
 # Signac and Row Workflow Tutorial: Basic Numpy Calculations
-----------------------------------------------------
+------------------------------------------------------------
 
 ## General Notes
 
@@ -120,7 +120,7 @@ Note: The cluster partitions in the `clusters.toml` can be specified for each HP
 Note: As needed, the cluster partitions in the `clusters.toml` can be fake ones.  Then specifying a fake partition in the `workflow.toml` file (i.e., `partition=fake_partition_name`), allows you just override the selected partition and allow many real partitions in the `workflow.toml` (i.e., `custom = ["","--partition=cpu-1,cpu-1,cpu-3"]`), which is used to write the `Slurm` submission script.
 - This can also be done if >1 or more partitions is needed.
 
-## Testing the setup for running **on an HPC**.
+### Testing the setup for running **on an HPC**.
 
 **Build the test workspace:**     
 
@@ -163,8 +163,9 @@ rm -r workspace
 ## Local Setup
 --------------
 
-## Testing the setup for running only locally, **not on an HPC**.  
 - If `row submit` is run locally like this, then you must remove the HPC parts in the `workflow.toml` file (see the notes in the `workflow.toml`).
+
+### Testing the setup for running only locally, **not on an HPC**.  
 
 **Build the test workspace:**     
 
