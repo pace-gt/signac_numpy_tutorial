@@ -2,7 +2,7 @@
 --------------------
 
 ### Overview
-The `analysis` directory is typically where the final project analysis files and data are stored.  This does not include the individual state point data or analysis files, which is typically stored in thier respective directories.  This `analysis` directory should remain here, with all the `init.py` file automatically deleting and regenerating the project analysis files and data files, as needed when generating new state points, ensuring that the previous (old) final project analysis files and data are never reused accidentially when the user adds new state points. 
+The `analysis` directory is typically where the final project analysis files and data are stored.  This does not include the individual state point data or analysis files, which is typically stored in thier respective directories.  This `analysis` directory should remain here, with the `init.py` file automatically deleting and regenerating the project analysis files and data files, as needed when generating new state points, ensuring that the previous (old) final project analysis files and data are never reused accidentially when the user adds new state points. 
 
 ### Examples
 
