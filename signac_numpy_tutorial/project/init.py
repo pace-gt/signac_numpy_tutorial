@@ -5,6 +5,7 @@ import os
 import numpy as np
 import signac
 import shutil
+import subprocess
 
 # *******************************************
 # ENTER THE MAIN USER STATEPOINTS (START)
