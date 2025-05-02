@@ -74,7 +74,22 @@ except:
 # rerun it. 
 # This also resets and recalculated the completion status.
 try:
-    os.system("rm workspace/*/avg_std_dev_calculated.txt")
-    os.system("row clean --completed && row scan")
+    # Delete the 'avg_std_dev_calculated.txt' file
+    exec_delete_avg_std_dev_file = subprocess.Popen(
+        "rm workspace/*/avg_std_dev_calculated.txt", 
+        shell=True, 
+        stderr=subprocess.STDOUT
+    )
+    os.wait4(exec_delete_avg_std_dev_file.pid, os.WSTOPPED)
+
+    # Clean and reset row's completion status
+    exec_reset_row_status = subprocess.Popen(
+        "row clean --completed && row scan", 
+        shell=True, 
+        stderr=subprocess.STDOUT
+    )
+    os.wait4(exec_reset_row_status.pid, os.WSTOPPED)
+
 except:
-    print(f"ERROR: Unable to clean and scan workspace progress.") 
+    print(
+        f"ERROR: Unable to delete the 'avg_std_dev_calculated.txt' file or clean and scan workspace progress.") 
