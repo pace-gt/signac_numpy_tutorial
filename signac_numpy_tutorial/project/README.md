@@ -121,7 +121,7 @@ Note: This needs to be done for each part as it only submits the available parts
  row show status
  ```
 
-- When the new jobs are ready, repeat this cycle until all jobs and the project is completed.
+- When the new jobs are ready, repeat this cycle until all jobs and the project is completed.  If all completed, the project is completed sucessfully. If not, you may need to rerun some parts.
   
 2. ### **Option 2 of 2: Submit and and run all the available jobs from specific the part with `row submit --action <part_x_this_does_a_function_y>`:**
  - Run all available `part 1` sections of the project locally with the `submit` command.
