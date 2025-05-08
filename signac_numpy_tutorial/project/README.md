@@ -33,7 +33,8 @@ signac init
     row show status
     ```
 
- - **All Available Project Parts:**  Submit and run all the available jobs from all the parts.
+### **Option 1 of 2: Check and Submit and run all the available jobs from all the parts.**
+------------------------------------------------------------------------------------------
    1. See the `row show status` output for the part names.
    2. Note: This can be run on the HPC or locally.  However, if `row submit` is run locally like this, then you must remove the HPC parts in the `workflow.toml` file (see the notes in the `workflow.toml`).
 
@@ -45,9 +46,10 @@ signac init
     **Run the following command to submit or execute all the available jobs:**
    ```bash
     row submit
-    ```
+   ```
 
-- **Specific Project Parts:**  Submit and and run all the available jobs from specific the parts.
+### **Option 2 of 2: Check and Submit all the available jobs from specific the parts.**
+------------------------------------------------------------------------------------
   1. See the `row show status` output for the part names.
   2. Note: This can be run on the HPC or locally.  However, if `row submit` is run locally like this, then you must remove the HPC parts in the `workflow.toml` file (see the notes in the `workflow.toml`).
 
