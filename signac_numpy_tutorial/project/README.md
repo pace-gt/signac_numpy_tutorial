@@ -130,7 +130,7 @@ Note: This needs to be done for each part as it only submits the available parts
 row submit --action part_1_initial_parameters_command
 ```
 
- - Checking the project status via the belw and move forward when the next part is ready to be submitted..
+ - Checking the project status and move forward when the next part is ready to be submitted.
   
  ```bash
  row show status
@@ -142,8 +142,8 @@ row submit --action part_1_initial_parameters_command
 row submit --action part_2_write_numpy_input_command
 ```
 
- - Checking the project status via the belw and move forward when the next part is ready to be submitted..
-  
+ - Checking the project status and move forward when the next part is ready to be submitted.
+   
  ```bash
  row show status
  ```
@@ -154,8 +154,8 @@ row submit --action part_2_write_numpy_input_command
 row submit --action part_3_numpy_calcs_command
 ```
 
- - Checking the project status via the belw and move forward when the next part is ready to be submitted..
-  
+ - Checking the project status and move forward when the next part is ready to be submitted.
+   
  ```bash
  row show status
  ```
