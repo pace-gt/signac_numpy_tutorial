@@ -76,7 +76,7 @@ The `clusters.toml` file is used to specify the the HPC environment.  The specif
 The following files are located here:
 
 ```bash
-cd <you_local_path>/signac_numpy_tutorial/signac_numpy_tutorial/project
+cd <you_local_path>/signac_pytorch_plmnist_example/signac_pytorch_plmnist_example/project
 ```
 
 ### **Modify and add the `clusters.toml` file:**
@@ -163,52 +163,8 @@ row clean
 rm -r workspace
 ```
 
-
-## Local Setup
---------------
-
-- If `row submit` is run locally like this, then you must remove the HPC parts in the `workflow.toml` file (see the notes in the `workflow.toml`).
-
-### Testing the setup for running only locally, **not on an HPC**.  
-
-**Build the test workspace:**     
-
-```bash
-python init.py
-```
-
-**Run the following command as the test:**     
-
-```bash
-row submit --dry-run
-```
-
-**You should see an output that looks something like this (<u>export ACTION_CLUSTER=\`none\`</u>) in the output if it is working:**
-
-```bash
-...
-
-directories=(
-be31aae200171ac52a9e48260b7ba5b1
-)
-
-export ACTION_WORKSPACE_PATH=workspace
-export ACTION_CLUSTER=`none`
-
-...
-```
-
-**Clean up row and delete the test workspace:**    
-
-```bash
-row clean
-```
-
-```bash
-rm -r workspace
-```
-
-## Testing the setup for running **on an HPC**.
+### Testing the setup for running **on an HPC**.
+-----------------------------------------------
 
 **Build the test workspace:**     
 
@@ -233,6 +189,51 @@ be31aae200171ac52a9e48260b7ba5b1
 
 export ACTION_WORKSPACE_PATH=workspace
 export ACTION_CLUSTER=<YOUR_HPC_NAME>
+
+...
+```
+
+**Clean up row and delete the test workspace:**    
+
+```bash
+row clean
+```
+
+```bash
+rm -r workspace
+```
+
+## Local Setup
+--------------
+
+- If `row submit` is run locally like this, then you must remove the HPC parts in the `workflow.toml` file (see the notes in the `workflow.toml`).
+
+### Testing the setup for running only locally, **not on an HPC**. 
+------------------------------------------------------------------ 
+
+**Build the test workspace:**     
+
+```bash
+python init.py
+```
+
+**Run the following command as the test:**       
+
+```bash
+row submit --dry-run
+```
+
+**You should see an output that looks something like this (<u>export ACTION_CLUSTER=\`none\`</u>) in the output if it is working:**
+
+```bash
+...
+
+directories=(
+be31aae200171ac52a9e48260b7ba5b1
+)
+
+export ACTION_WORKSPACE_PATH=workspace
+export ACTION_CLUSTER=`none`
 
 ...
 ```
