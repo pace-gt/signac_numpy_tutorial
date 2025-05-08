@@ -177,7 +177,7 @@ rm -r workspace
 python init.py
 ```
 
-**Run the following command as the test all available submissions or just from a spr:**     
+**Run the following command as the test:**     
 
 ```bash
 row submit --dry-run
