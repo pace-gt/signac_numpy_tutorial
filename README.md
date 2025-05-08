@@ -207,6 +207,7 @@ rm -r workspace
 --------------
 
 - If `row submit` is run locally like this, then you must remove the HPC parts in the `workflow.toml` file (see the notes in the `workflow.toml`).
+- Change the GPU parts to run only on CPU, if the local hardware is supports CPU workflows (see the notes in the `workflow.toml`).
 
 ### Testing the setup for running only locally, **not on an HPC**. 
 ------------------------------------------------------------------ 
