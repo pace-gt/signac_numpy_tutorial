@@ -115,7 +115,7 @@ Note: This needs to be done for each part as it only submits the available parts
  row submit
  ```
 
-- Checking the project status.
+ - Check the project status and move forward when the next part is ready to be submitted.
   
  ```bash
  row show status
@@ -130,7 +130,7 @@ Note: This needs to be done for each part as it only submits the available parts
 row submit --action part_1_initial_parameters_command
 ```
 
- - Checking the project status and move forward when the next part is ready to be submitted.
+ - Check the project status and move forward when the next part is ready to be submitted.
   
  ```bash
  row show status
@@ -142,7 +142,7 @@ row submit --action part_1_initial_parameters_command
 row submit --action part_2_write_numpy_input_command
 ```
 
- - Checking the project status and move forward when the next part is ready to be submitted.
+ - Check the project status and move forward when the next part is ready to be submitted.
    
  ```bash
  row show status
@@ -154,7 +154,7 @@ row submit --action part_2_write_numpy_input_command
 row submit --action part_3_numpy_calcs_command
 ```
 
- - Checking the project status and move forward when the next part is ready to be submitted.
+ - Check the project status and move forward when the next part is ready to be submitted.
    
  ```bash
  row show status
@@ -164,6 +164,12 @@ row submit --action part_3_numpy_calcs_command
 
 ```bash
 row submit --action part_4_analysis_replicate_averages_command
+```
+
+ - Check the project status and make sure all parts are completed.  If all completed, the project is completed sucessfully. If not, you may need to rerun some parts.
+
+```bash
+row show status
 ```
 
 ## Documention References:
