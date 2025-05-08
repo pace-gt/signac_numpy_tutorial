@@ -38,10 +38,11 @@ signac init
    1. See the `row show status` output for the part names.
    2. Note: This can be run on the HPC or locally.  However, if `row submit` is run locally like this, then you must remove the HPC parts in the `workflow.toml` file (see the notes in the `workflow.toml`).
 
-    **Run the following command and test/review the output to make sure it is submitting the correct slurm scripts or local output:**
-    ```bash
-    row submit --dry-run
-    ```
+   **Run the following command and test/review the output to make sure it is submitting the correct slurm scripts or local output:**
+
+   ```bash
+   row submit --dry-run
+   ```
 
     **Run the following command to submit or execute all the available jobs:**
    ```bash
@@ -53,15 +54,18 @@ signac init
   1. See the `row show status` output for the part names.
   2. Note: This can be run on the HPC or locally.  However, if `row submit` is run locally like this, then you must remove the HPC parts in the `workflow.toml` file (see the notes in the `workflow.toml`).
 
-    **Run the following command and review the output to make sure it is submitting the correct slurm scripts or local output:**:**
-    ```bash
-    row submit --action <part_x_this_does_a_function_y> --dry-run
-    ```
+   **Run the following command and review the output to make sure it is submitting the correctslurm scripts or local output:**:**
+   ```bash
+   row submit --action <part_x_this_does_a_function_y> --dry-run
+   ```
 
-    **Run the following command to submit or execute all the available jobs for that part:**
-    ```bash
-    row submit --action <part_x_this_does_a_function_y>
-    ```
+   **Run the following command to submit or execute all the available jobs for that part:**
+   ```bash
+   row submit --action <part_x_this_does_a_function_y>
+   ```
+
+## Submit the workflow jobs locally or to an HPC, depending on the `workflow.toml` file setup. 
+----------------------------------------------------------------------------------------------
 
 ## Submit the workflow jobs locally or to an HPC, depending on the `workflow.toml` file setup. 
 ----------------------------------------------------------------------------------------------
