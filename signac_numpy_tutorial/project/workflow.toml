@@ -85,11 +85,13 @@ maximum_size = 1
 
 [action.resources]
 processes.per_directory = 1
+
 # Change the GPU parts to run only on CPU, if the local hardware 
 # is supports CPU workflows (see the notes in the workflow.toml).
 # This means remove the'gpus_per_process' and change the 'partition', 
 # and 'custom' variables below.
 gpus_per_process = 1
+
 threads_per_process = 1
 memory_per_cpu_mb = 7_300
 walltime.per_submission = "00:13:00"
