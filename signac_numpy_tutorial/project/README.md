@@ -62,12 +62,13 @@ signac init
     ```
 
 ## Submit the workflow jobs locally or to an HPC, depending on the `workflow.toml` file setup. 
+----------------------------------------------------------------------------------------------
 
 Please also look [here](https://row.readthedocs.io/en/0.4.0/workflow/action/submit-options.html) for more details on the HPC setup.
 
 ## Setup the Run this project.
 
-All commands in this section are run from the `<local_path>/signac_numpy_tutorial/signac_numpy_tutorial/project` directory.
+All commands in this section are run from the `<local_path>/signac_pytorch_plmnist_example/signac_pytorch_plmnist_example/project` directory.
 
 The `signac init` command can be done at the start of a new project, but is not always required. If you moved the directory after starting a project or signac can not find the path correctly, you will need to run the following command (`signac init`) from the `project` directory:
 
@@ -100,7 +101,7 @@ row show status
 
 ## These are two (2) different ways to submit jobs (see below):
 
-1. ### **All Available Project Parts:**  Submit and run the all available jobs with `row submit`:
+1. ### **Option 1 of 2: Submit and ruun all the available jobs from all the parts with `row submit`:**
    - Run `all available jobs for the whole project` locally with the `submit` command. 
 Note: This needs to be done for each part as it only submits the available parts to the scheduler.
 
@@ -116,10 +117,9 @@ Note: This needs to be done for each part as it only submits the available parts
 
 - When the new jobs are ready, repeat this cycle until all jobs and the project is completed.
   
-
-2. ### **Specific Project Parts:**  Submit and and run all the available jobs from specific the part with `row submit --action <part_x_this_does_a_function_y>`.
+2. ### **Option 2 of 2: Submit and and run all the available jobs from specific the part with `row submit --action <part_x_this_does_a_function_y>`:**
  - Run all available `part 1` sections of the project locally with the `submit` command.
-
+   
 ```bash
 row submit --action part_1_initial_parameters_command
 ```
