@@ -44,7 +44,7 @@ signac init
    row submit --dry-run
    ```
 
-    **Run the following command to submit or execute all the available jobs:**
+   **Run the following command to submit or execute all the available jobs:**
    ```bash
     row submit
    ```
